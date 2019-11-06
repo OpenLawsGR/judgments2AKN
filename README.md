@@ -7,7 +7,7 @@ judgments2AKN is a project for the automated collection and transformation of Gr
 ### Scrappers
 - [Python](https://www.python.org/) v2.7
 - [Scrapy](https://scrapy.org/)
-- [Python binding for Selenium WebDriver](https://pypi.org/project/selenium/) and [Mozilla geckodriver](https://github.com/mozilla/geckodriver/releases) (tested with v0.26.0)
+- [Python binding for Selenium WebDriver](https://pypi.org/project/selenium/) (tested with v3.9.0) and [Mozilla geckodriver](https://github.com/mozilla/geckodriver/releases) (tested with v0.26.0)
 
 ### Transformation software
 - [Python](https://www.python.org/) v2.7
@@ -16,6 +16,11 @@ judgments2AKN is a project for the automated collection and transformation of Gr
 
 ## Instructions
 ### Scrappers
+The scrapper for the Council of State is based on Selenium (scrappers/ste_scrapper.py). It takes as input argument the year and downloads in plain text all court decisions that can be found for this year. Usage:
+
+```console
+user@foo:~$ python ste_scrapper.py 2016
+```
 
 ### Transformation software
 
