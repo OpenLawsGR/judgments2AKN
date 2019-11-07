@@ -6,13 +6,13 @@ judgments2AKN is a project for the automated collection and transformation of Gr
 ## Prerequisites
 ### Scrappers
 - [Python](https://www.python.org/) v2.7
-- [Scrapy](https://scrapy.org/)
+- [Scrapy](https://scrapy.org/) (tested with v1.6)
 - [Python binding for Selenium WebDriver](https://pypi.org/project/selenium/) (tested with v3.9.0) and [Mozilla geckodriver](https://github.com/mozilla/geckodriver/releases) (tested with v0.26.0)
 
 ### Transformation software
 - [Python](https://www.python.org/) v2.7
-- [lxml](https://lxml.de/) Python library
-- [Antlr (ANother Tool for Language Recognition)](https://www.antlr.org/) v4
+- [lxml](https://lxml.de/) Python library (tested with v4.3.1)
+- [Antlr (ANother Tool for Language Recognition)](https://www.antlr.org/) v4 (tested with v4.7.2)
 
 ## Instructions
 ### Scrappers
