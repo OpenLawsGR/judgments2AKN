@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<akomaNtoso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0" xsi:schemaLocation="http://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/part2-specs/schemas/akomantoso30.xsd">
+  <judgment name="decision">
+    <meta>
+      <identification source="#openLawsGR">
+        <FRBRWork>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2013/60/!main"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2013/60/"/>
+          <FRBRdate name="" date="2013-01-11"/>
+          <FRBRauthor href="#SCCC"/>
+          <FRBRcountry value="gr"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2013/60/ell@/!main"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2013/60/ell@"/>
+          <FRBRdate name="" date="2013-01-11"/>
+          <FRBRauthor href="#SCCC"/>
+          <FRBRlanguage language="ell"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2013/60/ell@/!main.xml"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2013/60/ell@.xml"/>
+          <FRBRdate date="2019-11-05" name="XMLConversion"/>
+          <FRBRauthor href="#openLawsGR"/>
+        </FRBRManifestation>
+      </identification>
+      <lifecycle source="#openLawsGR">
+        <eventRef date="2019-11-05" source="#original" type="generation"/>
+      </lifecycle>
+      <workflow source="#openLawsGR">
+        <step by="#SCCC" date="2012-11-02" refersTo="#courtConferenceDate"/>
+        <step by="#SCCC" date="2013-01-11" refersTo="#decisionPublicationDate"/>
+        <step by="#SCCC" date="2012-11-02" refersTo="#publicHearingDate"/>
+      </workflow>
+      <references source="#openLawsGR">
+        <original eId="original" href="/akn/gr/judgment/SCCC/2013/60/ell@" showAs="Original"/>
+        <TLCOrganization eId="dikastirio_areios_pagos" href="/akn/ontology/organization/gr/dikastirio_areios_pagos" showAs="ΤΟ ΔΙΚΑΣΤΗΡΙΟ ΤΟΥ ΑΡΕΙΟΥ ΠΑΓΟΥ"/>
+        <TLCPerson eId="Xaralampos_Dimadis" href="/akn/ontology/person/gr/Xaralampos_Dimadis" showAs="Χαράλαμπο Δημάδη"/>
+        <TLCPerson eId="Katsabria" href="/akn/ontology/person/gr/Katsabria" showAs="Κατσαβριά"/>
+        <TLCPerson eId="Gerasimos_balsamo" href="/akn/ontology/person/gr/Gerasimos_balsamo" showAs="Γεράσιμου Βάλσαμου"/>
+        <TLCPerson eId="X" href="/akn/ontology/person/gr/X" showAs="Χ."/>
+        <TLCOrganization eId="pentamelis_efeteio_Athina" href="/akn/ontology/organization/gr/pentamelis_efeteio_Athina" showAs="Πενταμελούς Εφετείου Αθηνών"/>
+        <TLCOrganization eId="efeteio_Athina" href="/akn/ontology/organization/gr/efeteio_Athina" showAs="Πενταμελές Εφετείο Αθηνών"/>
+        <TLCEvent eId="publicHearingDate" href="/akn/ontology/event/gr/publicHearingDate" showAs="Ημερομηνία δημόσιας συνεδρίασης"/>
+        <TLCEvent eId="decisionPublicationDate" href="/akn/ontology/event/gr/decisionPublicationDate" showAs="Ημερομηνία δημοσίευσης απόφασης"/>
+        <TLCEvent eId="courtConferenceDate" href="/akn/ontology/event/gr/courtConferenceDate" showAs="Ημερομηνία διάσκεψης"/>
+      </references>
+    </meta>
+    <header>
+      <p>Αριθμός<docNumber>60/2013</docNumber></p>
+      <p>
+        <docProponent>
+          <organization refersTo="#dikastirio_areios_pagos">ΤΟ ΔΙΚΑΣΤΗΡΙΟ ΤΟΥ ΑΡΕΙΟΥ ΠΑΓΟΥ</organization>
+        </docProponent>
+      </p>
+      <p>Ε' Ποινικό Τμήμα</p>
+      <p>Συγκροτήθηκε από τους Δικαστές: <person refersTo="#Xaralampos_Dimadis">Χαράλαμπο Δημάδη</person>, Αντιπρόεδρο του Αρείου Πάγου, Βιολέττα Κυτέα, Νικόλαο Κωνσταντόπουλο, Αικατερίνη Βασιλακοπούλου - <person refersTo="#Katsabria">Κατσαβριά</person> και Χρυσούλα Παρασκευά - Εισηγήτρια, Αρεοπαγίτες.</p>
+      <p>Συνήλθε σε δημόσια συνεδρίαση στο Κατάστημά του στις <date refersTo="publicHearingDate" date="2012-11-02">2 Νοεμβρίου 2012</date>, με την παρουσία του Αντεισαγγελέα του Αρείου Πάγου Αθανάσιου Κονταξή (κωλυομένου του Εισαγγελέως) και του Γραμματέως <person refersTo="#Gerasimos_balsamo">Γεράσιμου Βάλσαμου</person>, για να δικάσει την αίτηση του αναιρεσείοντος - κατηγορουμένου Α. Β. του <person refersTo="#X">Χ.</person>, κατοίκου ..., που δεν παρέστη στο ακροατήριο, για αναίρεση της <ref href="/akn/gr/judgment/AppelateCourtAthens/2011/1642/!main">1642/2011 αποφάσεως του <organization refersTo="#pentamelis_efeteio_Athina">Πενταμελούς Εφετείου Αθηνών</organization></ref>.</p>
+    </header>
+    <judgmentBody>
+      <introduction>
+        <p>Το <organization refersTo="#efeteio_Athina">Πενταμελές Εφετείο Αθηνών</organization>, με την ως άνω απόφασή του διέταξε όσα λεπτομερώς αναφέρονται σ' αυτή, και ο αναιρεσείων-κατηγορούμενος, ζητάει την αναίρεση της αποφάσεως αυτής για τους λόγους που αναφέρονται στην από 8 Ιουλίου 2011 αίτησή του, που καταχωρίστηκε στο οικείο πινάκιο με αριθμό 1163/2011.</p>
+      </introduction>
+      <motivation>
+        <p>Α φ ο ύ ά κ ο υ σ ε 
+Τον Αντεισαγγελέα που πρότεινε να απορριφθεί ως ανυποστήρικτη η προκείμενη αίτηση.</p>
+        <p>ΣΚΕΦΤΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ</p>
+        <blockList eId="motivation_list_1">
+          <item eId="motivation_list_1__item_1">
+            <num>1.</num>
+            <p>Κατά το <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_513__par_1">άρθρο 513 παρ. 1 εδ. γ' Κ.Ποιν.Δ</ref>., ο Εισαγγελέας του Αρείου Πάγου κλητεύει τον αναιρεσείοντα και τους λοιπούς διαδίκους στο ακροατήριο του Δικαστηρίου του Αρείου Πάγου. Η κλήση αυτή γίνεται με επίδοση, σύμφωνα με τα άρθρα 155-161 και μέσα στην προθεσμία του άρθρου 166. Κατά το άρθρο 514 εδ. α' του ίδιου Κώδικα, εάν ο αιτών την αναίρεση δεν εμφανισθεί, η αίτησή του απορρίπτεται.</p>
+          </item>
+          <item eId="motivation_list_1__item_2">
+            <num>2.</num>
+            <p>Στην προκειμένη περίπτωση, όπως προκύπτει από το υπό ημερομηνία 24-1-2012 αποδεικτικό επίδοσης του δικαστικού επιμελητού της Εισαγγελίας του Αρείου Πάγου ... καθώς και από το υπό ημερομηνία 27-1-2012 αποδεικτικά επιδόσεως του ως άνω δικαστικού επιμελητού προς τον αντίκλητο ο αναιρεσείων κλητεύθηκε από τον Εισαγγελέα του Αρείου Πάγου νόμιμα και εμπρόθεσμα, για να εμφανισθεί στη συνεδρίαση της 16-3-2012. Τότε αναβλήθηκε η συζήτηση της αίτησης αναίρεσης για τη συνεδρίαση που αναφέρεται στην αρχή της παρούσας απόφασης. Ο αναιρεσείων όμως δεν εμφανίσθηκε κατ' αυτή και την εκφώνηση της υπόθεσης ενώπιον του δικαστηρίου τούτου. Κατά συνέπεια, οι υπό κρίση αίτηση αναίρεσης πρέπει να απορριφθεί και να καταδικασθεί ο αναιρεσείων στα έξοδα (<ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_583__par_1">άρθρο 583 παρ. 1 Κ.Ποιν.Δ</ref>.).</p>
+          </item>
+        </blockList>
+      </motivation>
+      <decision>
+        <p>ΓΙΑ ΤΟΥΣ ΛΟΓΟΥΣ ΑΥΤΟΥΣ</p>
+        <p><outcome>Απορρίπτει</outcome> την από 8-7-2011 αίτηση του Α. Β. του <person refersTo="#X">Χ.</person>, κατοίκου ..., για αναίρεση της <ref href="/akn/gr/judgment/AppelateCourtAthens/2011/1642/!main">1642/2011 απόφασης του <organization refersTo="#pentamelis_efeteio_Athina">Πενταμελούς Εφετείου Αθηνών</organization></ref>. Και</p>
+        <p><outcome>Καταδικάζει</outcome> τον αναιρεσείοντα στα δικαστικά έξοδα, που ανέρχονται σε διακόσια πενήντα (250) ευρώ.</p>
+      </decision>
+    </judgmentBody>
+    <conclusions>
+      <p>Κρίθηκε και αποφασίσθηκε στην Αθήνα στις <date refersTo="courtConferenceDate" date="2012-11-02">2 Νοεμβρίου 2012</date>.</p>
+      <p>Δημοσιεύθηκε στην Αθήνα σε δημόσια συνεδρίαση στο ακροατήριό του στις <date refersTo="decisionPublicationDate" date="2013-01-11">11 Ιανουαρίου 2013</date>.</p>
+      <p>Ο ΑΝΤΙΠΡΟΕΔΡΟΣ Ο ΓΡΑΜΜΑΤΕΑΣ</p>
+    </conclusions>
+  </judgment>
+</akomaNtoso>

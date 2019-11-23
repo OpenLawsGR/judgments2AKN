@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<akomaNtoso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0" xsi:schemaLocation="http://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/part2-specs/schemas/akomantoso30.xsd">
+  <judgment name="decision">
+    <meta>
+      <identification source="#openLawsGR">
+        <FRBRWork>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2013/57/!main"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2013/57/"/>
+          <FRBRdate name="" date="2013-01-11"/>
+          <FRBRauthor href="#SCCC"/>
+          <FRBRcountry value="gr"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2013/57/ell@/!main"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2013/57/ell@"/>
+          <FRBRdate name="" date="2013-01-11"/>
+          <FRBRauthor href="#SCCC"/>
+          <FRBRlanguage language="ell"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2013/57/ell@/!main.xml"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2013/57/ell@.xml"/>
+          <FRBRdate date="2019-11-05" name="XMLConversion"/>
+          <FRBRauthor href="#openLawsGR"/>
+        </FRBRManifestation>
+      </identification>
+      <lifecycle source="#openLawsGR">
+        <eventRef date="2019-11-05" source="#original" type="generation"/>
+      </lifecycle>
+      <workflow source="#openLawsGR">
+        <step by="#SCCC" date="2012-11-02" refersTo="#courtConferenceDate"/>
+        <step by="#SCCC" date="2013-01-11" refersTo="#decisionPublicationDate"/>
+        <step by="#SCCC" date="2012-10-12" refersTo="#publicHearingDate"/>
+      </workflow>
+      <references source="#openLawsGR">
+        <original eId="original" href="/akn/gr/judgment/SCCC/2013/57/ell@" showAs="Original"/>
+        <TLCOrganization eId="dikastirio_areios_pagos" href="/akn/ontology/organization/gr/dikastirio_areios_pagos" showAs="ΤΟ ΔΙΚΑΣΤΗΡΙΟ ΤΟΥ ΑΡΕΙΟΥ ΠΑΓΟΥ"/>
+        <TLCOrganization eId="poinikos_tmima" href="/akn/ontology/organization/gr/poinikos_tmima" showAs="ΠΟΙΝΙΚΟ ΤΜΗΜΑ"/>
+        <TLCPerson eId="Xaralampos_Dimadis" href="/akn/ontology/person/gr/Xaralampos_Dimadis" showAs="Χαράλαμπο Δημάδη"/>
+        <TLCPerson eId="areios" href="/akn/ontology/person/gr/areios" showAs="Αρείου Πάγου"/>
+        <TLCPerson eId="Gerasimos_balsamo" href="/akn/ontology/person/gr/Gerasimos_balsamo" showAs="Γεράσιμου Βάλσαμου"/>
+        <TLCOrganization eId="efeteio_Athina" href="/akn/ontology/organization/gr/efeteio_Athina" showAs="Εφετείου Αθηνών"/>
+        <TLCOrganization eId="prwtodikeio_Athina" href="/akn/ontology/organization/gr/prwtodikeio_Athina" showAs="Πρωτοδικείου Αθηνών"/>
+        <TLCOrganization eId="prwtodikeio_Korinthos" href="/akn/ontology/organization/gr/prwtodikeio_Korinthos" showAs="Πρωτοδικείου Κορίνθου"/>
+        <TLCOrganization eId="efeteio_Nayplio" href="/akn/ontology/organization/gr/efeteio_Nayplio" showAs="Εφετείου Ναυπλίου"/>
+        <TLCOrganization eId="symboylio_efetis" href="/akn/ontology/organization/gr/symboylio_efetis" showAs="Συμβουλίου Εφετών"/>
+        <TLCOrganization eId="efeteio_Eyboia" href="/akn/ontology/organization/gr/efeteio_Eyboia" showAs="Εφετείου Ευβοίας"/>
+        <TLCOrganization eId="prwtodikeio_Peiraias" href="/akn/ontology/organization/gr/prwtodikeio_Peiraias" showAs="Πρωτοδικείου Πειραιώς"/>
+        <TLCOrganization eId="efeteio_Peiraias" href="/akn/ontology/organization/gr/efeteio_Peiraias" showAs="Εφετείου Πειραιώς"/>
+        <TLCEvent eId="publicHearingDate" href="/akn/ontology/event/gr/publicHearingDate" showAs="Ημερομηνία δημόσιας συνεδρίασης"/>
+        <TLCEvent eId="decisionPublicationDate" href="/akn/ontology/event/gr/decisionPublicationDate" showAs="Ημερομηνία δημοσίευσης απόφασης"/>
+        <TLCEvent eId="courtConferenceDate" href="/akn/ontology/event/gr/courtConferenceDate" showAs="Ημερομηνία διάσκεψης"/>
+      </references>
+    </meta>
+    <header>
+      <p>ΑΡΙΘΜΟΣ<docNumber>57/2013</docNumber></p>
+      <p>
+        <docProponent>
+          <organization refersTo="#dikastirio_areios_pagos">ΤΟ ΔΙΚΑΣΤΗΡΙΟ ΤΟΥ ΑΡΕΙΟΥ ΠΑΓΟΥ</organization>
+        </docProponent>
+      </p>
+      <p>Ε' <organization refersTo="#poinikos_tmima">ΠΟΙΝΙΚΟ ΤΜΗΜΑ</organization> - ΣΕ ΣΥΜΒΟΥΛΙΟ</p>
+      <p>Συγκροτήθηκε από τους Δικαστές: <person refersTo="#Xaralampos_Dimadis">Χαράλαμπο Δημάδη</person>, Αντιπρόεδρο του <person refersTo="#areios">Αρείου Πάγου</person>, Βιολέττα Κυτέα - Εισηγήτρια, Νικόλαο Κωνσταντόπουλο, Αικατερίνη Βασιλακοπούλου-Κατσαβριά και Δήμητρα Λεοντάρη-Μπουρνάκα, Αρεοπαγίτες.</p>
+      <p>Με την παρουσία και του Αντεισαγγελέως του <person refersTo="#areios">Αρείου Πάγου</person> Ευαγγέλου Παντιώρα (γιατί κωλύεται ο Εισαγγελέας) και του Γραμματέως <person refersTo="#Gerasimos_balsamo">Γεράσιμου Βάλσαμου</person>.</p>
+      <p>Συνήλθε σε Συμβούλιο στο Κατάστημά του στις <date refersTo="publicHearingDate" date="2012-10-12">12 Οκτωβρίου 2012</date>, προκειμένου να αποφανθεί για την αίτηση του Εισαγγελέως Πρωτοδικών Αθηνών, περί κανονισμού αρμοδιότητας δικαστηρίου, με εγκαλούσα την Μ. Α. του Α., Εισαγγελέα Πρωτοδικών Αθηνών. Η αίτηση αυτή με ημερομηνία 1 Μαΐου 2012, που απευθύνεται στον Εισαγγελέα του <person refersTo="#areios">Αρείου Πάγου</person>, καταχωρίστηκε στο οικείο πινάκιο με τον αριθμό 609/12.</p>
+    </header>
+    <judgmentBody>
+      <introduction>
+        <p>Έπειτα ο Αντεισαγγελέας του <person refersTo="#areios">Αρείου Πάγου</person> Ευάγγελος Παντιώρας εισήγαγε για κρίση στο Συμβούλιο τη σχετική δικογραφία με την πρόταση του Αντεισαγγελέως του <person refersTo="#areios">Αρείου Πάγου</person> Αναστασίου Κανελλόπουλου με αριθμό 173/21-9-2012, στην οποία αναφέρονται τα ακόλουθα: "Εισάγοντες την από 1-5-2012 αίτηση του Εισαγγελέως Πρωτοδικών Αθηνών, μετά της από 3-2-2010 εγκλήσεως της Μ. Α. του Α., Εισαγγελέως Πρωτοδικών Αθηνών, κατ' αγνώστων για κλοπή, προκειμένου να προβείτε στον κατά τα άρθρα 136 <ref href="/akn/gr/act/presidentialDecree/1986/258/!main">περίπτωση ε' και 137 Κ.Π.Δ.</ref> κανονισμό αρμοδιότητος, εκθέτομεν τα εξής: Κατά τη διάταξη του <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_136">άρθρου 136 περίπτωση ε' του Κ.Π.Δ.</ref>, όταν ο εγκαλών ή ο αδικηθείς ή ο κατηγορούμενος είναι δικαστικός λειτουργός από το βαθμό του Παρέδρου σε Πρωτοδικείο ή Εισαγγελία και άνω και υπηρετεί στο αρμόδιο, σύμφωνα με τα <ref href="/akn/gr/act/presidentialDecree/1986/258/!main~art_122->art_125">άρθρα 122-125 του Κ.Π.Δ.</ref>, Δικαστήριο, διατάσσεται η παραπομπή της υπόθεσης από το αρμόδιο Δικαστήριο σε άλλο ισόβαθμο και ομοειδές. Περίπτωση τέτοιας παραπομπής συντρέχει, όχι μόνο στο στάδιο της κύριας διαδικασίας, αλλά και της προδικασίας, στην οποία συμπεριλαμβάνεται και το στάδιο της προκαταρτικής εξέτασης. Επομένως, η ανωτέρω αίτηση του Εισαγγελέως Πρωτοδικών Αθηνών, πρέπει, ελλείψει άλλου Πρωτοδικείου που να ανήκει στην περιφέρεια του <organization refersTo="#efeteio_Athina">Εφετείου Αθηνών</organization>, πλην του <organization refersTo="#prwtodikeio_Athina">Πρωτοδικείου Αθηνών</organization>, να γίνει δεκτή και να διαταχθεί από τον Άρειο Πάγο, ως αρμοδίου κατ' εφαρμογήν των μνημονευθεισών διατάξεων του <ref href="/akn/gr/act/presidentialDecree/1986/258/!main">Κ.Π.Δ.</ref>, η παραπομπή της αναφερθείσης μηνύσεως στις κατωτέρω προτεινόμενες Δικαστικές και Εισαγγελικές αρχές.</p>
+        <p>Κατόπιν των ανωτέρω, Προτείνομεν Να ορισθούν ως κατά τόπον αρμόδιοι α) ο Εισαγγελεύς Πρωτοδικών Κορίνθου για τις κατά τα άρθρα <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_43">43</ref>, <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_47">47</ref> <ref href="/akn/gr/act/presidentialDecree/1986/258/!main">Κ.Π.Δ.</ref>, ενέργειες, επί της από 3-2-2010 εγκλήσεως της Μ. Α., κατ' αγνώστων και β) οι Δικαστικές Αρχές του <organization refersTo="#prwtodikeio_Korinthos">Πρωτοδικείου Κορίνθου</organization>, καθώς και οι Εισαγγελικές και Δικαστικές αρχές του <organization refersTo="#efeteio_Nayplio">Εφετείου Ναυπλίου</organization>, αν συντρέξει περίπτωση, για να επιληφθούν της συγκεκριμένης υποθέσεως.</p>
+        <p>Ο Αντεισαγγελέας του <person refersTo="#areios">Αρείου Πάγου</person>, Αναστάσιος Κανελλόπουλος."</p>
+      </introduction>
+      <motivation>
+        <p>Αφού άκουσε 
+Τον Αντεισαγγελέα, που αναφέρθηκε στην παραπάνω εισαγγελική πρόταση και έπειτα αποχώρησε,</p>
+        <p>ΣΚΕΦΘΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ</p>
+        <blockList eId="motivation_list_1">
+          <item eId="motivation_list_1__item_1">
+            <p>Κατά το <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_136">άρθρο 136 Κ.Π.Δ.</ref> "Το δικαστήριο που είναι αρμόδιο σύμφωνα με τα άρθρα 122-125 διατάξει την παραπομπή σε άλλο ισόβαθμο και ομοειδές όταν......ε) ο εγκαλών ή ο ζημιωμένος ή ο κατηγορούμενος είναι δικαστικός λειτουργός από το βαθμό του παρέδρου σε πρωτοδικείο ή εισαγγελία και άνω και υπηρετεί στο αρμόδιο σύμφωνα με τα άρθρα 122-125 δικαστήριο ...", κατά δε το (επόμενο) άρθρο 137 παρ.1 (<ref href="/akn/gr/act/presidentialDecree/1986/258/!main">ΚΠΔ</ref>) "Την παραπομπή μπορούν να τη ζητήσουν ο εισαγγελέας, ο κατηγορούμενος και ο πολιτικώς ενάγων ... . Για την παραπομπή αποφασίζει: α) το συμβούλιο πλημμελειοδικών, αν πρόκειται για παραπομπή από ένα πταισματοδικείο σε άλλο στις περιπτώσεις των στοιχείων α' και β' του άρθρου 136, β) το συμβούλιο εφετών, αν ζητείται η παραπομπή από ένα μονομελές ή τριμελές πλημμελειοδικείο ή δικαστήριο ανηλίκων σε άλλο όμοιο, γ) ο Άρειος Πάγος που συνέρχεται σε συμβούλιο, σε κάθε άλλη περίπτωση (εκτός από αυτή που αναφέρεται στο άρθρο 499) και πάντοτε όταν ζητείται η παραπομπή για το λόγο που αναφέρεται υπό στοιχ. γ' του άρθρου 136". Από τον δικαιολογητικό λόγο των άνω διατάξεων που είναι η εξασφάλιση της απόλυτης ανεξαρτησίας της κρίσεως του δικαστικού λειτουργού και ο αποκλεισμός κάθε υπονοίας μεροληψίας του από το ότι υπηρετεί στο ίδιο δικαστήριο με τον εγκαλούντα δικαστικό λειτουργό προκύπτει ότι η παραπομπή γίνεται όχι μόνο για την κυρία διαδικασία, αλλά και για την προδικασία, συμπεριλαμβανομένου και του σταδίου της ασκήσεως της ποινικής διώξεως για την ταυτότητα του λόγου.</p>
+          </item>
+          <item eId="motivation_list_1__item_2">
+            <p>Στην προκειμένη περίπτωση από τα έγγραφα της δικογραφίας προκύπτει ότι η Μ. Α. του Α. - Εισαγγελεύς Πρωτοδικών Αθηνών, υπέβαλε την από 3/2/2010 έγκληση κατ' αγνώστων για κλοπή, η οποία φέρεται ότι ετελέσθη εις βάρος της την αυτήν ως άνω ημεροχρονολογία στην Αθήνα. Η έγκληση αυτή διεβιβάσθη από τον Εισαγγελέα Πρωτοδικών Αθηνών εις τον Εισαγγελέα του <person refersTo="#areios">Αρείου Πάγου</person>, διότι ο Εισαγγελεύς Εφετών Αθηνών δεν μπορεί να ενεργοποιήσει μέσω του <organization refersTo="#symboylio_efetis">Συμβουλίου Εφετών</organization> την παραπομπή της υποθέσεως σε άλλο πρωτοδικείο της περιφερείας του, εκτός των Αθηνών, αφού (μετά και την ίδρυση του <organization refersTo="#efeteio_Eyboia">Εφετείου Ευβοίας</organization> και την υπαγωγή σ' αυτό των Πρωτοδικείων Χαλκίδος και Θηβών), δεν υπάρχει τοιούτο. Εν όψει αυτών συντρέχει περίπτωση κανονισμού αρμοδιότητος κατά παραπομπή της υποθέσεως σε άλλο Πρωτοδικείο και Εισαγγελία και δη του Πειραιώς ως κατωτέρω δεκτής, εντεύθεν, καθισταμένης της κρινομένης αιτήσεως του Εισαγγελέως Πρωτοδικών Αθηνών.</p>
+          </item>
+        </blockList>
+      </motivation>
+      <decision>
+        <p>ΓΙΑ ΤΟΥΣ ΛΟΓΟΥΣ ΑΥΤΟΥΣ</p>
+        <p><outcome>Παραπέμπει</outcome> την υπόθεση, η οποία αφορά την από 3/10/2010 έγκληση της Μ. Α. Α. κατ' αγνώστων στον Εισαγγελέα Πρωτοδικών Πειραιώς και στις λοιπές δικαστικές αρχές του <organization refersTo="#prwtodikeio_Peiraias">Πρωτοδικείου Πειραιώς</organization> ως και στις Εισαγγελικές και Δικαστικές Αρχές του <organization refersTo="#efeteio_Peiraias">Εφετείου Πειραιώς</organization>, αν συντρέξει νόμιμη περίπτωση.</p>
+      </decision>
+    </judgmentBody>
+    <conclusions>
+      <p>Κρίθηκε και αποφασίσθηκε στην Αθήνα στις <date refersTo="courtConferenceDate" date="2012-11-02">2 Νοεμβρίου 2012</date>.</p>
+      <p>Εκδόθηκε στην Αθήνα στις <date refersTo="decisionPublicationDate" date="2013-01-11">11 Ιανουαρίου 2013</date>.</p>
+      <p>Ο ΑΝΤΙΠΡΟΕΔΡΟΣ Ο ΓΡΑΜΜΑΤΕΑΣ</p>
+    </conclusions>
+  </judgment>
+</akomaNtoso>

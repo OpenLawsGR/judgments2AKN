@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<akomaNtoso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0" xsi:schemaLocation="http://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/part2-specs/schemas/akomantoso30.xsd">
+  <judgment name="decision">
+    <meta>
+      <identification source="#openLawsGR">
+        <FRBRWork>
+          <FRBRthis value="/akn/gr/judgment/COS/2008/Α47/!main"/>
+          <FRBRuri value="/akn/gr/judgment/COS/2008/Α47/"/>
+          <FRBRalias value="ECLI:EL:COS:2008:0107A47.05E2044" name="ECLI"/>
+          <FRBRdate name="" date="2008-01-07"/>
+          <FRBRauthor href="#COS"/>
+          <FRBRcountry value="gr"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/gr/judgment/COS/2008/Α47/ell@/!main"/>
+          <FRBRuri value="/akn/gr/judgment/COS/2008/Α47/ell@"/>
+          <FRBRdate name="" date="2008-01-07"/>
+          <FRBRauthor href="#COS"/>
+          <FRBRlanguage language="ell"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="/akn/gr/judgment/COS/2008/Α47/ell@/!main.xml"/>
+          <FRBRuri value="/akn/gr/judgment/COS/2008/Α47/ell@.xml"/>
+          <FRBRdate date="2019-11-16" name="XMLConversion"/>
+          <FRBRauthor href="#openLawsGR"/>
+        </FRBRManifestation>
+      </identification>
+      <lifecycle source="#openLawsGR">
+        <eventRef date="2019-11-16" source="#original" type="generation"/>
+      </lifecycle>
+      <workflow source="#openLawsGR">
+        <step by="#COS" date="2007-10-08" refersTo="#courtConferenceDate"/>
+        <step by="#COS" date="2008-01-07" refersTo="#decisionPublicationDate"/>
+        <step by="#COS" date="2007-09-27" refersTo="#publicHearingDate"/>
+      </workflow>
+      <references source="#openLawsGR">
+        <original eId="original" href="/akn/gr/judgment/COS/2008/Α47/ell@" showAs="Original"/>
+        <TLCEvent eId="publicHearingDate" href="/akn/ontology/event/gr/publicHearingDate" showAs="Ημερομηνία δημόσιας συνεδρίασης"/>
+        <TLCEvent eId="decisionPublicationDate" href="/akn/ontology/event/gr/decisionPublicationDate" showAs="Ημερομηνία δημοσίευσης απόφασης"/>
+        <TLCEvent eId="courtConferenceDate" href="/akn/ontology/event/gr/courtConferenceDate" showAs="Ημερομηνία διάσκεψης"/>
+      </references>
+    </meta>
+    <header>
+      <p>Αριθμός<docNumber>47/2008</docNumber></p>
+      <p>
+        <docProponent>ΤΟ ΣΥΜΒΟΥΛΙΟ ΤΗΣ ΕΠΙΚΡΑΤΕΙΑΣ</docProponent>
+      </p>
+      <p>ΤΜΗΜΑ Γ΄</p>
+      <p>Συνεδρίασε δημόσια στο ακροατήριό του στις <date refersTo="publicHearingDate" date="2007-09-27">27 Σεπτεμβρίου 2007</date>, με την εξής</p>
+      <p>σύνθεση: Σωτ. Ρίζος, Αντιπρόεδρος, Προεδρεύων, σε αναπλήρωση του Προέδρου του</p>
+      <p>Τμήματος που είχε κώλυμα, Α. Γκότσης, Α. Καραμιχαλέλης, Σύμβουλοι, Κ.</p>
+      <p>Πισπιρίγκος, Ι. Μιχαλακόπουλος, Πάρεδροι. Γραμματέας η Δ. Μουζάκη, Γραμματέας</p>
+      <p>του Γ’ Τμήματος.</p>
+      <p>Για να δικάσει την από 9 Μαρτίου 2005 αίτηση:</p>
+      <p>της Ζ. Ν. του Ι., κατοίκου Χ., οδός Σ. Μ. αρ. 6, η οποία δεν παρέστη,</p>
+      <p>κατά του Ανωτάτου Συμβουλίου Επιλογής Προσωπικού (Α.Σ.Ε.Π.), το οποίο παρέστη</p>
+      <p>με τη Ν. Μαριόλη, Πάρεδρο του Νομικού Συμβουλίου του Κράτους.</p>
+    </header>
+    <judgmentBody>
+      <introduction>
+        <p>Με την αίτηση αυτή η αιτούσα επιδιώκει να ακυρωθεί η υπ’ αριθμ. 1626/25.11.2004</p>
+        <p>πράξη του Ανωτάτου Συμβουλίου Επιλογής Προσωπικού (Α.Σ.Ε.Π.).</p>
+        <p>Η εκδίκαση άρχισε με την ανάγνωση της εκθέσεως του Εισηγητή, Παρέδρου Κ.</p>
+        <p>Πισπιρίγκου.</p>
+        <p>Κατόπιν το δικαστήριο άκουσε την αντιπρόσωπο του Υπουργού, η οποία ζήτησε την</p>
+        <p>απόρριψη της υπό κρίση αιτήσεως.</p>
+        <p>Μετά τη δημόσια συνεδρίαση το δικαστήριο συνήλθε σε διάσκεψη σε αίθουσα του</p>
+        <p>δικαστηρίου κ α ι</p>
+      </introduction>
+      <motivation>
+        <p>Α φ ο ύ μ ε λ έ τ η σ ε τ α σ χ ε τ ι κ ά έ γ γ ρ α φ α</p>
+        <p>Σ κ έ φ θ η κ ε κ α τ ά τ ο Ν ό μ ο</p>
+        <blockList eId="motivation_list_1">
+          <item eId="motivation_list_1__item_1">
+            <num>1.</num>
+            <p>Επειδή, για την άσκηση της κρινομένης αιτήσεως κατεβλήθη το νόμιμο παράβολο
+(υπ΄ αριθμ. Α. 1633536, 2340621/2005 ειδικά γραμμάτια παραβόλου).</p>
+          </item>
+          <item eId="motivation_list_1__item_2">
+            <num>2.</num>
+            <p>Επειδή, με την κρινόμενη αίτηση ζητείται η ακύρωση της υπ΄ αριθμ.
+1626/25.11.2004 πράξεως του Ανωτάτου Συμβουλίου Επιλογής Προσωπικού (Α.Σ.Ε.Π.),
+κατά το μέρος αυτής με το οποίο κρίθηκε ότι η αιτούσα δεν δύναται να προσληφθεί
+σε προκηρυχθείσα προς πλήρωση θέση προσωπικού του νομικού προσώπου ιδιωτικού
+δικαίου υπό την επωνυμία ‘’Δημοτική Επιχείρηση Ανάπτυξης και Κατασκευής Έργων
+Δήμου Κ.’’, κατηγορίας ΔΕ, ειδικότητος ελαιοχρωματιστή, για την οποία υπήρξε
+υποψήφια, λόγω ελλείψεως τυπικού προσόντος.</p>
+          </item>
+          <item eId="motivation_list_1__item_3">
+            <num>3.</num>
+            <p>Επειδή, το δικόγραφο της κρινομένης αιτήσεως υπογράφεται μόνον από δικηγόρο
+φερομένη ως πληρεξουσία της αιτούσης. Κατά την συζήτηση, όμως, της υποθέσεως
+στο ακροατήριο του Δικαστηρίου η αιτούσα δεν παρέστη με δικηγόρο, ούτε
+εμφανίσθηκε για να εγκρίνει την άσκηση της αιτήσεως ενώ, εξ άλλου, δεν
+προσκομίσθηκε μέχρι την συζήτηση της υποθέσεως συμβολαιογραφική πράξη παροχής
+πληρεξουσιότητος στην δικηγόρο που υπογράφει το δικόγραφο. Συνεπώς, η αίτηση
+είναι απορριπτέα, ως απαράδεκτη, σύμφωνα με το <ref href="/akn/gr/act/presidentialDecree/1989/18/!main#art_27">άρθρο 27 του Π.Δ. 18/1989</ref> (Α΄8),
+όπως τροποποιήθηκε με το <ref href="/akn/gr/act/law/1997/2479/!main#art_4__par_2">άρθρο 4 παρ. 2 του Ν. 2479/1997</ref> (Α΄67).</p>
+          </item>
+        </blockList>
+      </motivation>
+      <decision>
+        <p>Δ ι ά τ α ύ τ α</p>
+        <p><outcome>Απορρίπτει</outcome> την αίτηση.</p>
+        <p>Διατάσσει την κατάπτωση του παραβόλου. Και</p>
+        <p>Επιβάλλει στην αιτούσα την δικαστική δαπάνη του Α.Σ.Ε.Π., που ανέρχεται στο</p>
+        <p>ποσόν των τετρακοσίων εξήντα (460) ευρώ.</p>
+      </decision>
+    </judgmentBody>
+    <conclusions>
+      <p>Η διάσκεψη έγινε στην Αθήνα στις <date refersTo="courtConferenceDate" date="2007-10-08">8 Οκτωβρίου 2007</date> και η απόφαση δημοσιεύθηκε σε</p>
+      <p>δημόσια συνεδρίαση της <date refersTo="decisionPublicationDate" date="2008-01-07">7ης Ιανουαρίου 2008</date>.</p>
+      <p>Ο Προεδρεύων Αντιπρόεδρος Η Γραμματέας του Γ' Τμήματος</p>
+      <p>Σωτ. Ρίζος Δ. Μουζάκη</p>
+    </conclusions>
+  </judgment>
+</akomaNtoso>

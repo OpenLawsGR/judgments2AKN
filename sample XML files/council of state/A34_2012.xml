@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<akomaNtoso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0" xsi:schemaLocation="http://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/part2-specs/schemas/akomantoso30.xsd">
+  <judgment name="decision">
+    <meta>
+      <identification source="#openLawsGR">
+        <FRBRWork>
+          <FRBRthis value="/akn/gr/judgment/COS/2012/Α34/!main"/>
+          <FRBRuri value="/akn/gr/judgment/COS/2012/Α34/"/>
+          <FRBRalias value="ECLI:EL:COS:2012:0110A34.05E1662" name="ECLI"/>
+          <FRBRdate name="" date="2012-01-10"/>
+          <FRBRauthor href="#COS"/>
+          <FRBRcountry value="gr"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/gr/judgment/COS/2012/Α34/ell@/!main"/>
+          <FRBRuri value="/akn/gr/judgment/COS/2012/Α34/ell@"/>
+          <FRBRdate name="" date="2012-01-10"/>
+          <FRBRauthor href="#COS"/>
+          <FRBRlanguage language="ell"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="/akn/gr/judgment/COS/2012/Α34/ell@/!main.xml"/>
+          <FRBRuri value="/akn/gr/judgment/COS/2012/Α34/ell@.xml"/>
+          <FRBRdate date="2019-11-18" name="XMLConversion"/>
+          <FRBRauthor href="#openLawsGR"/>
+        </FRBRManifestation>
+      </identification>
+      <lifecycle source="#openLawsGR">
+        <eventRef date="2019-11-18" source="#original" type="generation"/>
+      </lifecycle>
+      <workflow source="#openLawsGR">
+        <step by="#COS" date="2009-01-21" refersTo="#courtConferenceDate"/>
+        <step by="#COS" date="2012-01-10" refersTo="#decisionPublicationDate"/>
+        <step by="#COS" date="2009-01-20" refersTo="#publicHearingDate"/>
+      </workflow>
+      <references source="#openLawsGR">
+        <original eId="original" href="/akn/gr/judgment/COS/2012/Α34/ell@" showAs="Original"/>
+        <TLCEvent eId="publicHearingDate" href="/akn/ontology/event/gr/publicHearingDate" showAs="Ημερομηνία δημόσιας συνεδρίασης"/>
+        <TLCEvent eId="decisionPublicationDate" href="/akn/ontology/event/gr/decisionPublicationDate" showAs="Ημερομηνία δημοσίευσης απόφασης"/>
+        <TLCEvent eId="courtConferenceDate" href="/akn/ontology/event/gr/courtConferenceDate" showAs="Ημερομηνία διάσκεψης"/>
+      </references>
+    </meta>
+    <header>
+      <p>Αριθμός<docNumber>34/2012</docNumber></p>
+      <p>
+        <docProponent>ΤΟ ΣΥΜΒΟΥΛΙΟ ΤΗΣ ΕΠΙΚΡΑΤΕΙΑΣ</docProponent>
+      </p>
+      <p>ΤΜΗΜΑ Δ΄</p>
+      <p>Συνεδρίασε δημόσια στο ακροατήριό του στις <date refersTo="publicHearingDate" date="2009-01-20">20 Ιανουαρίου 2009</date>, με την εξής σύνθεση: Δημοσθένης Π. Πετρούλιας, Σύμβουλος της Επικρατείας, Προεδρεύων, σε αναπλήρωση του Προέδρου του Τμήματος, της Αναπληρώτριας Προέδρου και του Προεδρεύοντος Αντιπροέδρου, που είχαν κώλυμα, Δ. Γρατσίας, Ηρ. Τσακόπουλος, Σύμβουλοι, Α.-Μ. Παπαδημητρίου, Ι. Μιχαλακόπουλος, Πάρεδροι. Γραμματέας η Δ. Μουζάκη, Γραμματέας του Δ΄ Τμήματος.</p>
+      <p>Για να δικάσει την από 23ης Φεβρουαρίου 2005 αίτηση:</p>
+      <p>του ..., κατοίκου Καλαμαριάς Θεσσαλονίκης (...) και ήδη κρατούμενου στις Δικαστικές Φυλακές Ναυπλίου, ο οποίος δεν παρέστη,</p>
+      <p>κατά του Υπουργού Δικαιοσύνης, ο οποίος παρέστη με τον Βασίλειο Καραγεώργο,</p>
+      <p>Πάρεδρο του Νομικού Συμβουλίου του Κράτους.</p>
+    </header>
+    <judgmentBody>
+      <introduction>
+        <p>Με την αίτηση αυτή ο αιτών επιδιώκει να ακυρωθεί η υπ’ αριθμ. 110772/ΦΕΑ 605/20.9.2000 απόφαση του Υπουργού Δικαιοσύνης.</p>
+        <p>Η εκδίκαση άρχισε με την ανάγνωση της εκθέσεως του εισηγητή, Συμβούλου Δ. Γρατσία.</p>
+        <p>Κατόπιν το δικαστήριο άκουσε τον αντιπρόσωπο του Υπουργού, ο οποίος ζήτησε την απόρριψη της υπό κρίση αιτήσεως.</p>
+        <p>Μετά τη δημόσια συνεδρίαση το δικαστήριο συνήλθε σε διάσκεψη σε αίθουσα του δικαστηρίου κ α ι</p>
+      </introduction>
+      <motivation>
+        <p>Α φ ο ύ μ ε λ έ τ η σ ε τ α σ χ ε τ ι κ ά έ γ γ ρ α φ α</p>
+        <p>Σ κ έ φ θ η κ ε κ α τ ά τ ο Ν ό μ ο</p>
+        <blockList eId="motivation_list_1">
+          <item eId="motivation_list_1__item_1">
+            <num>1.</num>
+            <p>Επειδή για την άσκηση της κρινομένης αιτήσεως έχει καταβληθεί το νόμιμο παράβολο (163464 και 2276797/2005 ειδικά έντυπα παραβόλου).</p>
+          </item>
+          <item eId="motivation_list_1__item_2">
+            <num>2.</num>
+            <p>Επειδή ζητείται η ακύρωση της αποφάσεως 110772/ΦΕΑ 605/Φ17/20.9.2000 του Υπουργού Δικαιοσύνης, με την οποία διετάχθη η έκδοση και παράδοση στις αλβανικές αρχές του αιτούντος Αλβανού υπηκόου, προκειμένου ο τελευταίος να διωχθεί και να δικαστεί στην Αλβανία για το έγκλημα της κλοπής μεγάλων χρηματικών ποσών, σύμφωνα με το ένταλμα συλλήψεως 345/16.8.1999 του Πρωτοδικείου Τιράνων.</p>
+          </item>
+          <item eId="motivation_list_1__item_3">
+            <num>3.</num>
+            <p>Επειδή, μετά την άσκηση της κρινομένης αιτήσεως εκδόθηκε η απόφαση 41126/ΦΕΑ 605/25.6.2007 του Υπουργού Δικαιοσύνης, με την οποία, αφ΄ ενός μεν ανακλήθηκε η προσβαλλόμενη με την υπό κρίση αίτηση υπουργική απόφαση, αφ΄ ετέρου δε διετάχθη η έκδοση και παράδοση του αιτούντος στις αλβανικές αρχές, προκειμένου να εκτίσει στην Αλβανία ποινή καθείρξεως δέκα ετών για το έγκλημα της απάτης κατά συναυτουργία, ποινή επιβληθείσα με την απόφαση 93/10.3.2003 του Δικαστηρίου της Δικαστικής Επαρχίας Τιράνων, η οποία κατέστη τελεσίδικη με την απόφαση 316/23.5.2003 του Εφετείου Τιράνων. Κατά της ως άνω νεώτερης υπουργικής αποφάσεως ασκήθηκε από τον αιτούντα αίτηση ακυρώσεως, η οποία έχει ήδη απορριφθεί με την <ref href="/akn/gr/judgment/COS/2008/1654/!main">απόφαση 1654/2008 του Συμβουλίου της Επικρατείας</ref>.</p>
+          </item>
+          <item eId="motivation_list_1__item_4">
+            <num>4.</num>
+            <p>Επειδή, εν όψει της ανακλήσεως, μετά την άσκηση της κρινομένης αιτήσεως, της προσβαλλομένης υπουργικής αποφάσεως, η ανοιγείσα με την υπό κρίση αίτηση δίκη πρέπει να κηρυχθεί κατηργημένη, κατά τα οριζόμενα στο <ref href="/akn/gr/act/presidentialDecree/1989/18/!main#art_32__par_1">άρθρο 32 παράγραφος 1 του π.δ. 18/1989</ref> «Κωδικοποίηση διατάξεων νόμων για το Συμβούλιο της Επικρατείας» (Α΄ 8).</p>
+          </item>
+          <item eId="motivation_list_1__item_5">
+            <num>5.</num>
+            <p>Επειδή, επί καταργήσεως της δίκης για οποιονδήποτε λόγο αποδίδεται το καταβληθέν παράβολο και δεν επιδικάζεται δικαστική δαπάνη και (βλ. άρθρα <ref href="/akn/gr/act/presidentialDecree/1989/18/!main#art_6__par_4">36 παράγραφος 4</ref> και <ref href="/akn/gr/act/presidentialDecree/1989/18/!main#art_9__par_2">39 παράγραφος 2</ref> του <ref href="/akn/gr/act/presidentialDecree/1989/18/!main">π.δ. 18/1989</ref>).</p>
+          </item>
+        </blockList>
+      </motivation>
+      <decision>
+        <p>Δ ι ά τ α ύ τ α</p>
+        <p>Κηρύσσει κατηργημένη τη δίκη.</p>
+        <p>Διατάσσει την απόδοση του καταβληθέντος παραβόλου.</p>
+      </decision>
+    </judgmentBody>
+    <conclusions>
+      <p>Η διάσκεψη έγινε στην Αθήνα στις <date refersTo="courtConferenceDate" date="2009-01-21">21 Ιανουαρίου 2009</date> και 12 Οκτωβρίου 2010</p>
+      <p>Ο Προεδρεύων Σύμβουλος   Η Γραμματέας του Δ' Τμήματος</p>
+      <p>Δημοσθένης Π. Πετρούλιας  Δ. Μουζάκη</p>
+      <p>και η απόφαση δημοσιεύθηκε σε δημόσια συνεδρίαση της <date refersTo="decisionPublicationDate" date="2012-01-10">10ης Ιανουαρίου 2012</date>.</p>
+      <p>Ο Πρόεδρος του Δ' Τμήματος  Η Γραμματέας του Δ' Τμήματος</p>
+      <p>Σωτ. Αλ. Ρίζος  Μ. Παπαδοπούλου</p>
+    </conclusions>
+  </judgment>
+</akomaNtoso>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<akomaNtoso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0" xsi:schemaLocation="http://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/part2-specs/schemas/akomantoso30.xsd">
+  <judgment name="decision">
+    <meta>
+      <identification source="#openLawsGR">
+        <FRBRWork>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2007/36/!main"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2007/36/"/>
+          <FRBRdate name="" date="2007-01-10"/>
+          <FRBRauthor href="#SCCC"/>
+          <FRBRcountry value="gr"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2007/36/ell@/!main"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2007/36/ell@"/>
+          <FRBRdate name="" date="2007-01-10"/>
+          <FRBRauthor href="#SCCC"/>
+          <FRBRlanguage language="ell"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="/akn/gr/judgment/SCCC/2007/36/ell@/!main.xml"/>
+          <FRBRuri value="/akn/gr/judgment/SCCC/2007/36/ell@.xml"/>
+          <FRBRdate date="2019-11-02" name="XMLConversion"/>
+          <FRBRauthor href="#openLawsGR"/>
+        </FRBRManifestation>
+      </identification>
+      <lifecycle source="#openLawsGR">
+        <eventRef date="2019-11-02" source="#original" type="generation"/>
+      </lifecycle>
+      <workflow source="#openLawsGR">
+        <step by="#SCCC" date="2006-12-20" refersTo="#courtConferenceDate"/>
+        <step by="#SCCC" date="2007-01-10" refersTo="#decisionPublicationDate"/>
+        <step by="#SCCC" date="2006-12-12" refersTo="#publicHearingDate"/>
+      </workflow>
+      <references source="#openLawsGR">
+        <original eId="original" href="/akn/gr/judgment/SCCC/2007/36/ell@" showAs="Original"/>
+        <TLCOrganization eId="dikastirio_areios_pagos" href="/akn/ontology/organization/gr/dikastirio_areios_pagos" showAs="ΤΟ ΔΙΚΑΣΤΗΡΙΟ ΤΟΥ ΑΡΕΙΟΥ ΠΑΓΟΥ"/>
+        <TLCOrganization eId="poinikos_tmima" href="/akn/ontology/organization/gr/poinikos_tmima" showAs="ΠΟΙΝΙΚΟ ΤΜΗΜΑ"/>
+        <TLCPerson eId="Dimitrios_Kyritsaki" href="/akn/ontology/person/gr/Dimitrios_Kyritsaki" showAs="Δημήτριο Κυριτσάκη"/>
+        <TLCPerson eId="Xristos_Pita" href="/akn/ontology/person/gr/Xristos_Pita" showAs="Χρήστου Πήτα"/>
+        <TLCOrganization eId="trimelis_plimmeleiodikeio_Kozani" href="/akn/ontology/organization/gr/trimelis_plimmeleiodikeio_Kozani" showAs="Τριμελούς Πλημμελειοδικείου Κοζάνης"/>
+        <TLCOrganization eId="plimmeleiodikeio_Kozani" href="/akn/ontology/organization/gr/plimmeleiodikeio_Kozani" showAs="Τριμελές Πλημμελειοδικείο Κοζάνης"/>
+        <TLCOrganization eId="monomelis_prwtodikeio_Kozani" href="/akn/ontology/organization/gr/monomelis_prwtodikeio_Kozani" showAs="Μονομελούς Πρωτοδικείου Κοζάνης"/>
+        <TLCEvent eId="publicHearingDate" href="/akn/ontology/event/gr/publicHearingDate" showAs="Ημερομηνία δημόσιας συνεδρίασης"/>
+        <TLCEvent eId="decisionPublicationDate" href="/akn/ontology/event/gr/decisionPublicationDate" showAs="Ημερομηνία δημοσίευσης απόφασης"/>
+        <TLCEvent eId="courtConferenceDate" href="/akn/ontology/event/gr/courtConferenceDate" showAs="Ημερομηνία διάσκεψης"/>
+      </references>
+    </meta>
+    <header>
+      <p>Αριθμός<docNumber>36/2007</docNumber></p>
+      <p>
+        <docProponent>
+          <organization refersTo="#dikastirio_areios_pagos">ΤΟ ΔΙΚΑΣΤΗΡΙΟ ΤΟΥ ΑΡΕΙΟΥ ΠΑΓΟΥ</organization>
+        </docProponent>
+      </p>
+      <p>ΣΤ΄ <organization refersTo="#poinikos_tmima">ΠΟΙΝΙΚΟ ΤΜΗΜΑ</organization></p>
+      <p>Συγκροτήθηκε από τους Δικαστές: <person refersTo="#Dimitrios_Kyritsaki">Δημήτριο Κυριτσάκη</person>, Αντιπρόεδρο, Μιχαήλ Δέτση, Γρηγόριο Μάμαλη, Αιμιλία Λίτινα-Εισηγήτρια και Θεοδώρα Γκοΐνη, Αρεοπαγίτες.</p>
+      <p>Συνήλθε σε δημόσια συνεδρίαση στο Κατάστημά του στις <date refersTo="publicHearingDate" date="2006-12-12">12 Δεκεμβρίου 2006</date>, με την παρουσία του Αντεισαγγελέα του Αρείου Πάγου Ανδρέα Ζύγουρα (γιατί κωλύεται ο Εισαγγελέας) και του Γραμματέως <person refersTo="#Xristos_Pita">Χρήστου Πήτα</person>, για να δικάσει την αίτηση του αναιρεσείοντος-κατηγορουμένου ..., που εκπροσωπήθηκε από τον πληρεξούσιο δικηγόρο του Παναγιώτη Παπαδόπουλο, για αναίρεση της 364/2006 αποφάσεως του <organization refersTo="#trimelis_plimmeleiodikeio_Kozani">Τριμελούς Πλημμελειοδικείου Κοζάνης</organization>, με πολιτικώς ενάγουσα την ..., που δεν παρέστη στο ακροατήριο.  Το <organization refersTo="#plimmeleiodikeio_Kozani">Τριμελές Πλημμελειοδικείο Κοζάνης</organization>, με την ως άνω απόφασή του διέταξε όσα λεπτομερώς αναφέρονται σ΄ αυτή, και ο αναιρεσείων-κατηγορούμενος, ζητεί την αναίρεση αυτής, για τους λόγους που αναφέρονται στην από 2 Μαΐου 2006 αίτησή του αναιρέσεως, η οποία καταχωρίστηκε στο οικείο πινάκιο με τον αριθμό 907/2006.</p>
+    </header>
+    <judgmentBody>
+      <motivation>
+        <p>Αφού άκουσε Τον πληρεξούσιο δικηγόρο του αναιρεσείοντος, που ζήτησε όσα αναφέρονται στα σχετικά πρακτικά και τον Αντεισαγγελέα, που πρότεινε να γίνει δεκτή η προκείμενη αίτηση αναίρεσης.</p>
+        <p>ΣΚΕΦΘΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ</p>
+        <blockList eId="motivation_list_1">
+          <item eId="motivation_list_1__item_1">
+            <p>Επειδή κατά το <ref href="/akn/gr/act/presidentialDecree/1985/283/!main#art_358">άρθρο 358 ΠΚ</ref>., όποιος κακόβουλα παραβιάζει την υποχρέωση διατροφής, που του την έχει επιβάλει ο νόμος και έχει αναγνωρίσει, έστω και προσωρινά, το δικαστήριο με τρόπο τέτοιο, ώστε ο δικαιούχος να υποστεί στερήσεις ή να αναγκαστεί να δεχθεί βοήθεια άλλων τιμωρείται με φυλάκιση μέχρι ενός έτους. Από τη διάταξη αυτή προκύπτει, ότι για τη στοιχειοθέτηση του εγκλήματος απαιτείται δεδηλωμένη παράλειψη του φερόμενου ως υπόχρεου προς διατροφή, προβλεπόμενη από το νόμο και αναγνωρισμένη με δικαστική απόφαση, έστω και προσωρινώς και οφειλόμενη σε κακοβουλία, δηλαδή στην ευδιάθετη βούληση μη συμμορφώσεώς του προς την υποχρέωση, παρότι είχε την οικονομική δυνατότητα να καταβάλει για το προσδιορισμένο χρονικό διάστημα το χρηματικό ποσό που επιδικάσθηκε για την κάλυψη των αναγκών επιβιώσεως του δικαιουμένου προσώπου. Εξάλλου, έλλειψη της απαιτούμενης από τα άρθρα <ref href="/akn/gr/act/constitution/2001/!main#art_93">93</ref> παρ. <ref href="/akn/gr/act/constitution/2001/!main#art_93__par_3">3</ref> του <ref href="/akn/gr/act/constitution/2001/!main">Συντάγματος</ref> και <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_139">139</ref> του <ref href="/akn/gr/act/presidentialDecree/1986/258/!main">Κ.Ποιν.Δ</ref> ειδικής και εμπεριστατωμένης αιτιολογίας, της δικαστικής αποφάσεως, που ιδρύει τον από το <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_510__par_1">άρθρο 510 παρ. 1 στοιχ. Δ΄ Κ.Ποιν.Δ</ref> λόγο αναιρέσεως, υπάρχει, όταν δεν περιέχονται σαφώς και πλήρως τα πραγματικά περιστατικά που προέκυψαν από τη διαδικασία, επί των οποίων θεμελιώθηκε η κρίση του δικαστηρίου, οι αποδείξεις και οι σκέψεις με τις οποίες υπήχθησαν τα πραγματικά περιστατικά στην ουσιαστική ποινική διάταξη που εφαρμόσθηκε. Στην προκείμενη περίπτωση, όπως προκύπτει από την προσβαλλόμενη απόφαση, το <organization refersTo="#plimmeleiodikeio_Kozani">Τριμελές Πλημμελειοδικείο Κοζάνης</organization> που την εξέδωσε, αφού διαλαμβάνει τα αποδεικτικά μέσα που έλαβε υπόψη του, δέχθηκε τα εξής πραγματικά περιστατικά : "ο κατηγορούμενος, ενώ είχε την υποχρέωση να καταβάλλει στην αρχή κάθε μήνα στην εγκαλούσα πρώην σύζυγο του ... το ποσό των 280 ευρώ ως τακτική εις χρήμα διατροφή και στα δύο ανήλικα τέκνα του ... και ... τα ποσά των 260 και 240 ευρώ αντίστοιχα, δυνάμει της υπ΄ αριθμ. 58/2005 απόφασης του <organization refersTo="#monomelis_prwtodikeio_Kozani">Μονομελούς Πρωτοδικείου Κοζάνης</organization>, αυτός (κατηγορούμενος) κακόβουλα παραβίασε την υποχρέωση αυτή για καταβολή διατροφής στα παραπάνω πρόσωπα, μη καταβάλλοντας σε αυτούς (σύζυγο και ανήλικα τέκνα) την καθορισθείσα ως άνω διατροφή για το χρονικό διάστημα από αρχές Μαρτίου μέχρι και Ιούνιο του 2005, ενώ έπρεπε να καταβάλλει από αρχές Μαρτίου 780 ευρώ γι΄ αυτούς. Έτσι, ενώ έπρεπε να καταβάλλει για το ως άνω χρονικό διάστημα (1-3-2005/30-6-2005) το ποσό των 3.120 ευρώ (780Χ4 μήνες) κατέβαλε μόνο 350 ευρώ, απομείναντος υπολοίπου εκ 2.700 ευρώ. Συνεπεία της ως άνω παράβασης του κατηγορουμένου, τα ανήλικα τέκνα του και η σύζυγός του αναγκάσθηκαν να δεχθούν τη βοήθεια των συγγενικών τους προσώπων. Ο ισχυρισμός του κατηγορουμένου ότι κατεβλήθησαν χρηματικά ποσά έναντι της οφειλομένης διατροφής δεν αίρει την κακοβουλία του, καθ΄ όσον οι γενόμενες από αυτόν καταβολές χρημάτων αφορούν οφειλόμενα από την υπ΄ αριθμ. 120/2004 απόφαση (ασφαλιστικών μέτρων), που επιδόθηκε σε αυτόν την 7-4-2005. Εξάλλου με βάση την ως άνω απόφαση ασφαλιστικών μέτρων επιβλήθηκε κατάσχεση του μισθού του, δηλαδή εις χείρας τρίτου, για τα οφειλόμενα ποσά διατροφής. Πρέπει, συνεπώς, ο κατηγορούμενος να κηρυχθεί ένοχος παράβασης υποχρέωσης διατροφής κατά συρροή". Η αιτιολογία όμως αυτή είναι ελλιπής δεδομένου ότι ούτε στο σκεπτικό ούτε στο διατακτικό της προσβαλλόμενης αποφάσεως γίνεται δεκτό, ότι ο αναιρεσείων είχε την οικονομική δυνατότητα να καταβάλει το ποσό που επιδικάσθηκε με την ως άνω απόφαση λόγω διατροφής στη σύζυγο και τέκνα του ούτε διαλαμβάνονται σ΄ αυτά περιστατικά από τα οποία να προκύπτει η ευδιάθετη βούλησή του να μη συμμορφωθεί στην απόφαση αυτή, αλλ΄ ούτε και ότι η απόφαση αυτή γνωστοποιήθηκε με επίδοσή της στον αναιρεσείοντα και πότε, δεδομένου ότι η αναγνώριση τέτοιας υποχρεώσεως για χρονικό διάστημα προγενέστερο από την έκδοση της αποφάσεως και της γνωστοποιήσεως της στον υπόχρεο δεν συνεπάγεται καμία ποινική κύρωση αυτού. Επομένως, πρέπει, κατά παραδοχή των από το <ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_510__par_1">άρθρο 510 παρ. 1 στοιχ. Δ΄ του ΚΠΔ</ref> σχετικού λόγου αναίρεσης να αναιρεθεί η προσβαλλόμενη απόφαση και να παραπεμφθεί η υπόθεση για νέα συζήτηση στο ίδιο δικαστήριο, γιατί είναι δυνατή η σύνθεσή του από άλλους δικαστές εκτός εκείνων που δίκασαν προηγουμένως (<ref href="/akn/gr/act/presidentialDecree/1986/258/!main#art_519">άρθρο 519 Κ.Ποιν.Δ</ref>).</p>
+          </item>
+        </blockList>
+      </motivation>
+      <decision>
+        <p>ΓΙΑ ΤΟΥΣ ΛΟΓΟΥΣ ΑΥΤΟΥΣ</p>
+        <p><outcome>Αναιρεί</outcome> την υπ΄ αριθμ. 364/2006 απόφαση του <organization refersTo="#trimelis_plimmeleiodikeio_Kozani">Τριμελούς Πλημμελειοδικείου Κοζάνης</organization>. Και</p>
+        <p><outcome>Παραπέμπει</outcome> την υπόθεση για νέα συζήτηση στο ίδιο δικαστήριο, που θα συγκροτηθεί από άλλους δικαστές εκτός εκείνων που δίκασαν προηγουμένως.</p>
+      </decision>
+    </judgmentBody>
+    <conclusions>
+      <p>Κρίθηκε και αποφασίσθηκε στην Αθήνα στις <date refersTo="courtConferenceDate" date="2006-12-20">20 Δεκεμβρίου 2006</date>.</p>
+      <p>Δημοσιεύθηκε στην Αθήνα σε δημόσια συνεδρίαση στο ακροατήριό του στις <date refersTo="decisionPublicationDate" date="2007-01-10">10 Ιανουαρίου 2007</date>.</p>
+      <p>Ο ΑΝΤΙΠΡΟΕΔΡΟΣ Ο ΓΡΑΜΜΑΤΕΑΣ</p>
+    </conclusions>
+  </judgment>
+</akomaNtoso>
