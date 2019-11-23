@@ -66,3 +66,6 @@ Generated XML files can be validated against the Akoma Ntoso Schema using the ch
 
 ## License
 Software is licensed under the MIT license.
+
+## Funding
+The project "Automated Analysis and Processing of Legal Texts for their Transformation into Legal Open Data" is implemented through the Operational Program "Human Resources Development, Education and Lifelong Learning" and is co-financed by the European Union (European Social Fund) and Greek national funds.
