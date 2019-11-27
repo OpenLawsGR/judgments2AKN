@@ -168,11 +168,18 @@ def GrToLat(src, namePattern=None):
                     #print char.decode('utf-8')
                     #print char.decode('windows-1253')
                     for key, value in grToLat.items():
-                        if char.decode('windows-1253') == key.decode('utf-8'):
-                            #print key.decode('utf-8')
-                            #print value
-                            #print name.replace(char, value)
-                            name = re.sub(char, value, name)
+                        if os.name != 'posix':
+                            if char.decode('windows-1253') == key.decode('utf-8'):
+                                #print key.decode('utf-8')
+                                #print value
+                                #print name.replace(char, value)
+                                name = re.sub(char, value, name)
+                        else:
+                            if char == key:
+                                #print key.decode('utf-8')
+                                #print value
+                                #print name.replace(char, value)
+                                name = re.sub(char, value, name)
                     #print char
                     #print grToLat.get(char)
                     #name = re.sub(char, grToLat.get(char), name)
