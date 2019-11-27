@@ -77,11 +77,11 @@ if __name__ == '__main__':
         for year in range (1990, 2018):
             for root, dirs, files in os.walk(os.path.join(SRC, str(year))):
 
-                # create a corresponding year folder into 'post_processing/ste',
+                # create a corresponding year folder into 'pdftotext/ste',
                 if not os.path.exists(os.path.join(DEST, str(year))):
                     os.makedirs(os.path.join(DEST, str(year)))
 
-                # create a corresponding year folder into 'post_processing' that holds metadata,  
+                # create a corresponding year folder into 'pdftotext' that holds metadata,  
                 if not os.path.exists(os.path.join(STE_METADATA_PATH, str(year))):
                     os.makedirs(os.path.join(STE_METADATA_PATH, str(year)))
 
