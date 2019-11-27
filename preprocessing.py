@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 import fnmatch
-from functions import *
-from variables import ClarityGarbages, SteGarbages, AreiosPagosGarbages
-from variables import FekGarbages, nskGarbages, grToLat
+import os
+import codecs
+from functions import pdfToText, GrToLat, subs_text, escapeXMLChars
+from functions import checkForSummaries
+from variables import SteGarbages, AreiosPagosGarbages, nskGarbages, grToLat
 
 BASE_URL_MAIN =  os.path.join(os.getcwd(), 'legal_crawlers/data')
 BASE_URL_DEST = os.path.join(os.getcwd(), 'pdftotext')
-RULES_FILE = os.path.join(os.getcwd(), 'replacements')
+#RULES_FILE = os.path.join(os.getcwd(), 'replacements')
 
 #declare which folder to start from
-FOLDER_PATH = r'nsk'
+FOLDER_PATH = r'ste'
 
 #declare ste metadata folder name
 STE_METADATA = r'ste_metadata'
@@ -21,10 +23,7 @@ if __name__ == '__main__':
     DEST = os.path.join(BASE_URL_DEST, FOLDER_PATH)
     folder = os.path.basename(SRC)
     #print "Folder: " + folder
-    #print(SRC)
-    #print(DEST)
-    #sys.exit()
-
+    
     if folder in ('nsk'):
         # 1st step -> get text from pdf files
         pdfToText(SRC, DEST)
@@ -71,45 +70,64 @@ if __name__ == '__main__':
                         fout.close()
             
     elif folder in ('ste'):
-        # 1st step -> create latin names of files
-        GrToLat(DEST)
-
-        # 2st step -> create latin names of metadata files
-        GrToLat(STE_METADATA_FOLDER)
-
-        # 3rd step -> remove garbages from files
+        # 1st step -> remove garbages from files
         HEADER = r'(^.*?\n\s*(?=Ε.Ο. Aριθμός|Αριθμός|Aριθμός|Αριθμό|ΑΡΙΘΜΟΣ|ΣτΕ\s*\d+|ΟλΣτΕ\s*\d+|\(Απόσπασμα\)|\(Α π ό σ π α σ μ α\)))'
-        # For every judgment into directory 'legal_crawlers/ste',
+
+        # For every judgment into directory 'legal_crawlers/data/ste',
         for year in range (1990, 2018):
             for root, dirs, files in os.walk(os.path.join(SRC, str(year))):
 
-                # create a corresponding year folder into 'pdftotext/ste',
+                # create a corresponding year folder into 'post_processing/ste',
                 if not os.path.exists(os.path.join(DEST, str(year))):
                     os.makedirs(os.path.join(DEST, str(year)))
 
-                # create a corresponding year folder into 'pdftotext' that holds metadata,  
-                if not os.path.exists(os.path.join(STE_METADATA_FOLDER, str(year))):
-                    os.makedirs(os.path.join(STE_METADATA_FOLDER, str(year)))
-                #print os.path.join(os.path.join(BASE_URL_DEST, STE_METADATA), str(year))
+                # create a corresponding year folder into 'post_processing' that holds metadata,  
+                if not os.path.exists(os.path.join(STE_METADATA_PATH, str(year))):
+                    os.makedirs(os.path.join(STE_METADATA_PATH, str(year)))
 
                 for name in files:
+                    # create new file name so that it contains year of publication
+                    new_file_name = name.split('.')[0] + '_' + str(year)
+
                     if fnmatch.fnmatch(name, '*.txt'):
-                        print(name)
+                        print name
                         # declare full path for each file where metadata will be stored  
-                        metaFilePath = os.path.join(os.path.join(STE_METADATA_FOLDER, str(year)), name.split('.')[0] + '_' + str(year) + '_meta.txt')
-                        #print  metaFilePath
+                        metaFilePath = os.path.join(os.path.join(STE_METADATA_PATH, str(year)), new_file_name + '_meta.txt')
+                        #print metaFilePath
+                        
                         with open(os.path.join(os.path.join(SRC, str(year)), name), 'r') as fin:
-                            judgmentText = fin.read()
-                            #print judgmentText
+                            # by default the first 10 lines contain metadata
+                            # see ste crawler
+                            judgmentText_ = fin.readlines()
+                            metadata = ''
+                            judgmentBody = ''
+
+                            for line in judgmentText_[:10]:
+                                metadata += line
+
+                            for line in judgmentText_[11:]:
+                                judgmentBody += line
+                                
+                            # we open a new file for writing metadata
+                            with open(metaFilePath, 'w') as fhead:
+                                fhead.write(metadata)
+                                
+                            # we open a new file for writing body
+                            with open(os.path.join(os.path.join(DEST, str(year)), new_file_name + '.txt'), 'w') as fbody:
+                                fbody.write(escapeXMLChars(subs_text(judgmentBody, SteGarbages)))
+
+                            '''
+                            # 2nd option (read file until HEADER text and write accordingly)
+                            #judgmentText = fin.read()
                             try:
                                 header = re.match(HEADER, judgmentText, re.DOTALL).group(0)
                                 judgmentBody = judgmentText.replace(header, '', 1)
 
-                                # we open a new file for writing metadata
+                                # Open a new file for writing metadata
                                 with open(metaFilePath, 'w') as fhead:
                                     fhead.write(header)
 
-                                # we open a new file for writing body
+                                # Open a new file for writing body
                                 with open(os.path.join(os.path.join(DEST, str(year)), name), 'w') as fbody:
                                     fbody.write(escapeXMLChars(subs_text(judgmentBody, SteGarbages)))
 
@@ -118,49 +136,16 @@ if __name__ == '__main__':
                                 with open(os.path.join(os.path.join(DEST, str(year)), name), 'w') as fbody:
                                     fbody.write(escapeXMLChars(subs_text(judgmentText, SteGarbages)))
                                 #pass
+                            '''
 
-        """
-        # Chek for summaries in judgment files and remove them
-        cnt = 0
-        for year in range (1991, 2019):
-            for root, dirs, files in os.walk(os.path.join(DEST, str(year))):
-                for name in files:
-                    hasSummary = 0
-                    if fnmatch.fnmatch(name, '*.txt'):
-                        with open(os.path.join(os.path.join(DEST, str(year)), name), 'r') as fin:
-                            summary = re.match(r'^\(Απόσπασμα\)|^Α\d+/\d+', fin.read(), re.DOTALL)
-                            #print summary
-                            if summary:
-                                print "Found Judgment File with summary: " + name
-                                hasSummary = 1
-                                cnt += 1
-                                metaFileExists = os.path.isfile(os.path.join(os.path.join(STE_METADATA_FOLDER, str(year), name.split('.')[0]+'_meta.txt')))
-                                if metaFileExists:
-                                    print "Metadata File exists: " + name
-                                    print "Removing: " + os.path.join(os.path.join(STE_METADATA_FOLDER, str(year), name.split('.')[0]+'_meta.txt'))
-                                    os.remove(os.path.join(os.path.join(STE_METADATA_FOLDER, str(year), name.split('.')[0]+'_meta.txt')))
+        # 2nd step -> create latin names of files
+        GrToLat(DEST)
 
-                        if hasSummary == 1:
-                            print "Removing: " + os.path.join(os.path.join(DEST, str(year)), name)
-                            os.remove(os.path.join(os.path.join(DEST, str(year)), name))
-             
-        print "Total Files: " + str(cnt)
-        sys.exit()
-        """
-        """# Rename Files so that they contain the year in their name
-        for year in range (1990, 2018):
-            for root, dirs, files in os.walk(os.path.join(STE_METADATA_FOLDER, str(year))):
-                for name in files:
-                    if fnmatch.fnmatch(name, '*.txt'):
-                        #newFilename = name.split('.')[0] + '_' + str(year) + '_meta.txt'
-                        #newFilename = name.split('.')[0] + '_meta.txt'
-                        newFilename = name.split('.')[0].split('_')[0] + '_' + str(year) + '_meta.txt'
-                        print name
-                        print newFilename
-                        os.rename(os.path.join(os.path.join(STE_METADATA_FOLDER, str(year)), name),
-                                  os.path.join(os.path.join(STE_METADATA_FOLDER, str(year)), newFilename))
-        sys.exit()
-        """
+        # 3rd step -> create latin names of metadata files
+        GrToLat(STE_METADATA_PATH)
+
+        # 4th step -> Chek for summaries in judgment files and remove them
+        checkForSummaries(DEST, STE_METADATA_PATH)
         
     elif folder in ('areios_pagos'):
         # 1st step -> create latin names of files
