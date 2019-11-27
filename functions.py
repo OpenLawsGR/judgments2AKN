@@ -187,6 +187,57 @@ def GrToLat(src, namePattern=None):
                 os.rename(os.path.join(dirpath, old_name), os.path.join(dirpath, name))
     print("Done...")
 
+
+def checkForSummaries(src, metadata_path=None, namePattern=None):
+    """Check if a judgment contains summary of the decision and deletes
+    corresponding file
+
+    Args:
+        src: The root directory that contains files
+
+        metadata_path: If specified this is the path where metadata is stored. It will
+            also delete the corresponding metadata file (if it exists)
+
+        namePattern: check if specific file contains summary
+
+    Returns:
+        Nothing
+    """
+    
+    if namePattern is not None:
+        filePattern = namePattern
+    else:
+        filePattern = '*.txt'
+
+    # total number of files containing summaries
+    cnt = 0
+    for root, dirs, files in os.walk(src, topdown=True):
+        #print root
+        year = os.path.basename(root)
+        for name in files:
+            hasSummary = 0
+            if fnmatch.fnmatch(name, filePattern):
+                with open(os.path.join(os.path.join(src, str(year)), name), 'r') as fin:
+                    summary = re.match(r'^\(Απόσπασμα\)|^Α\d+/\d+', fin.read(), re.DOTALL)
+                    #print summary
+                    if summary:
+                        print "Found Judgment file with summary: " + name
+                        hasSummary = 1
+                        cnt += 1
+                        if metadata_path is not None:
+                            metaFileExists = os.path.isfile(os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt')))
+                            #print os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt'))
+                            if metaFileExists:
+                                print "Metadata File exists: " + name
+                                print "Removing: " + os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt'))
+                                os.remove(os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt')))
+
+                if hasSummary == 1:
+                    print "Removing: " + os.path.join(os.path.join(src, str(year)), name)
+                    os.remove(os.path.join(os.path.join(src, str(year)), name))
+
+    print "Complete removing summaries. Total Files removed: " + str(cnt)
+
     
 def fixFek(path):
     """For issues between 2000-2005 pdf encoding is damaged. This is only
