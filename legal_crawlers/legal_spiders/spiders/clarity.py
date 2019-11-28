@@ -3,31 +3,18 @@
 This crawler uses diavgeia API to download any type of dicision.
 
 It performs a simple search (GET /search) and each http response is an
-XML page. Please visit the following URL 
+XML page (for more information on authentication, organizations, decisions
+types etc. see link below) 
 
-"https://diavgeia.gov.gr/api/help"
+https://diavgeia.gov.gr/api/help"
 
-for instructions http messages, examples of client code, authentication,
-decisions types (https://diavgeia.gov.gr/luminapi/opendata/types),
-organizations (https://diavgeia.gov.gr/luminapi/opendata/organizations),
-query parameters that you can use etc.
+Usage examples (fileType param must contain greek characters!):
+    scrapy crawl clarity (by default circulars published in the last 30 days)
 
-Examples for using this crawler are given below (fileType param must contain
-greek characters!):
-scrapy crawl clarity    (by default circulars (Εγκύκλιοι) published the
-                        last 30 days)
-
-scrapy crawl clarity -a fileType=Α.4
-                     -a from_issue_date=2000-01-01
-                     -a from_date=2000-01-01
-                     -a org=50024   (all Legal Council of the State (ΝΣΚ)
-                                     opinions since 2000)
-                                    
-                     
-scrapy crawl clarity -a fileType=Α.3
-                     -a from_issue_date=2000-01-01
-                     -a from_date=2000-01-01    (all circulars of all
-                                                 principles since 2000)
+    scrapy crawl clarity -a fileType=Α.4
+                         -a from_date=2000-01-01
+                         -a org=50024 (all legal opinions of the Legal
+                                     Council of State since 2000)
 """
 
 import os
@@ -36,26 +23,24 @@ from scrapy.selector import Selector
 from scrapy.http import Request
 from lxml import etree
 
+# Declare namespace
 ns = {'diav':'http://diavgeia.gov.gr/schema/v2'}
 BASE_API_URL = r'https://diavgeia.gov.gr/luminapi/opendata/search.xml'
 
-#some nodes are missing information about pdf files url
-#specific pattern is being used to point to a specific file
-#we construct it manually
+# A specific pattern is used to point to a pdf file 
 BASE_ADA_URL = r'https://diavgeia.gov.gr/doc/'
 
-
+# Get the number of pages that the crawler will visit
 def pages(number):
     if number % 500 > 0:
         return number / 500 + 1
     else:
         return number / 500
 
-
 class claritySpider(scrapy.Spider):
     name = "clarity"
     allowed_domains = ["diavgeia.gov.gr"]
-    #We use custom settings (it works!) to avoid being banned from diavgeia
+    # We use custom settings to avoid being banned from diavgeia
     custom_settings = {
         'USER_AGENT' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)'+
                         'AppleWebKit/537.36(KHTML, like Gecko)'+
@@ -76,10 +61,8 @@ class claritySpider(scrapy.Spider):
         self.reqUrl += "&size=500"
         #print self.reqUrl
         self.start_urls.append(self.reqUrl)
-        #print self.start_urls
-        #pass
         
-        #specific folders implementation based on our work
+        # Declare specific folders for each type of file
         if str(fileType) == 'Α.3':
             self.STORE_DIR = r'data/clarity_egkyklioi/'
         elif str(fileType) == 'Α.4':
@@ -92,7 +75,6 @@ class claritySpider(scrapy.Spider):
 
         print __doc__
 
-        
     def parse(self, response):
         selector = Selector(response)
         selector.remove_namespaces()
@@ -106,7 +88,6 @@ class claritySpider(scrapy.Spider):
             yield request
 
     def parseXML(self, response):
-        #global STORE_DIR
         selector = Selector(response)
         #print selector
         selector.remove_namespaces()
@@ -116,7 +97,6 @@ class claritySpider(scrapy.Spider):
         for elem in xml.getchildren():
             ada = elem.find('ada', namespaces = ns)
             #print ada
-            #some documentUrl nodes are empty
             #documentUrl = elem.find('diav:documentUrl', namespaces = ns)
             if ada is not None:
                 with open(self.STORE_DIR + ada.text + '.txt', 'w') as txt:
@@ -126,7 +106,5 @@ class claritySpider(scrapy.Spider):
                               meta={'ada' : ada.text})
 
     def parsePDF(self, response):
-        #global STORE_DIR
         with open(self.STORE_DIR + response.meta['ada'] + '.pdf', 'wb') as pdf:
             pdf.write(response.body)
-

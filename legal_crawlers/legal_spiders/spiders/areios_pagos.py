@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 """
-This crawler downloads the decisions (Criminal and Political) of the
-Greek Supreme Court. It uses the website of the Pancyprian Bar Association
-(www.cylaw.org)
+This crawler extracts judgment decisions of the Greek Supreme Civil and
+Criminal court "Areios Pagos". It's architecture is based on DOM of the
+Pancyprian Bar Association website (see: www.cylaw.org)
 
-To use this crawler type one of the following commands:
-scrapy crawl CyLaw      (decisions published the current year) 
-scrapy crawl CyLaw -a year=2017     (decisions published a specific year)
-scrapy crawl CyLaw -a year=2015,2017    (decisions published within a range)
+Usage examples:
+    scrapy crawl CyLaw (extract decisions published the current year) 
+    scrapy crawl CyLaw -a year=2017 (extract decisions of a specific year)
+    scrapy crawl CyLaw -a year=2015,2017 (extract decisions within a range of years)
 """
 import os
 import scrapy
@@ -17,8 +17,7 @@ from datetime import datetime
 
 # Current year to download files when no arguments are used
 current_year = datetime.now().year
-
-         
+  
 class CyLawSpider(scrapy.Spider):
     name = "CyLaw"
     allowed_domains = ["cylaw.org"]
@@ -38,17 +37,16 @@ class CyLawSpider(scrapy.Spider):
             for year in range(year_from, year_to):
                 #print year_from
                 #print year_to
-                self.start_urls.append("http://www.cylaw.org/areiospagos/index_"
-                                       +str(year)+".html")
+                self.start_urls.append(
+                    "http://www.cylaw.org/areiospagos/index_"+
+                    str(year)+
+                    ".html")
 
             if not os.path.exists(self.STORE_DIR):
                 os.makedirs(self.STORE_DIR)
                 
         except ValueError, NameError:
             print __doc__
-            print "Something went wrong! Please check one of the following"
-            print "1) use integers as year parameters"
-            print "2) DOM may have changed! Check the code again (:p)\n"
 
     def parse(self, response):
         sel = Selector(response)
@@ -73,5 +71,3 @@ class CyLawSpider(scrapy.Spider):
         with open(self.STORE_DIR+response.url.split('/')[7]+'/'+filename+'.txt', 'w') as f:
             for text in sel.xpath('//p/text()').extract():
                 f.write(text.encode('utf-8')+'\n')
-        
-
