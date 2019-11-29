@@ -71,13 +71,13 @@ itemPar : (.*?) NEXT_LINE+ (SPACE* NEXT_LINE+)?;
 num : NUM SPACE? DOT;
 
 decision : decisionIntro decisionPar+ ;
-decisionIntro: (DECISION_INTRO) SPACE* NEXT_LINE+ ;
+decisionIntro: (DECISION_INTRO) SPACE* NEXT_LINE? ;
 //outcomePar : outcome? (.*?) NEXT_LINE+ (SPACE* NEXT_LINE+)? ;
 decisionPar : outcome? (.*?) NEXT_LINE+;
 outcome : OUTCOME;
 
 //------------------------ Conclusion -------------------------------------//
-conclusions : conclusionIntro? concPar+ ;
+conclusions : conclusionIntro concPar+ ;
 conclusionIntro : DIASKEPSI text+ NEXT_LINE?;
 concPar : (text+) (.*?) NEXT_LINE*;
 
@@ -99,19 +99,23 @@ THINK_BY_LAW :
     'Σ' SPACE? 'κ' SPACE? 'έ' SPACE? 'φ' SPACE? 'θ' SPACE? 'η' SPACE? 'κ' SPACE? 'ε' SPACE?
     'κ' SPACE? 'α' SPACE? 'τ' SPACE? 'ά' SPACE?
     'τ' SPACE? 'ο' SPACE? ('ν' SPACE?)? 'Ν' SPACE? 'ό' SPACE? 'μ' SPACE? 'ο' SPACE? |
+    'Σ Κ Ε Φ Θ Η Κ Ε Σ Υ Μ Φ Ω Ν Α Μ Ε Τ Ο Ν Ο Μ Ο' |
     ('ΣΚΕΦΘΗΚΕ' | 'ΣΚΕΦΤΗΚΕ') SPACE? 'ΣΥΜΦΩΝΑ' SPACE? 'ΜΕ' SPACE? ('ΤΟ' |'ΤΟΝ') SPACE? 'ΝΟΜΟ' |
     'Σ κ έ φ θ η κ ε κ α τ ά τ ο ν ό μ ο' | 'Σ κ ε φ θ έ ν κ α τ ά τ ο ν Ν ό μ ο ν' |
     'ΣΚΕΦΘΗΚΕ ΚΑΤΑ ΤΟ ΝΟΜΟ' |
     'Σκέφθηκε Σύμφωνα με το Νόμο' |
     'Σκέφθηκε σύμφωνα με το' SPACE ('ν'|'Ν'|'N')'όμο' |
-    'ΣΚΕΦΘΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ' | 'ΣΚΕΦΤΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ';
+    'ΣΚΕΦΘΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ' |
+    'ΣΚΕΦΤΗΚΕ ΣΥΜΦΩΝΑ ΜΕ ΤΟ ΝΟΜΟ';
 
 BECAUSE: ('Επειδή');
 BECAUSE_ALT : 'επειδή' ;
 DECISION_INTRO :
-    'ΓΙ'('A'|'Α') SPACE? 'ΤΟΥΣ' SPACE? 'Λ'('Ο'|'O')'ΓΟΥΣ' SPACE? ('ΑΥΤΟΥΣ' | 'ΑΥΤΟΎΣ') ((SPACE '-')? | ('.'))? |
-    'Για' SPACE? 'τους' SPACE? 'λόγους' SPACE? 'αυτούς' |
+    ('ΓΙ'('A'|'Α') | 'ΠΑ') SPACE? 'ΤΟΥΣ' SPACE? 'Λ'('Ο'|'O')'ΓΟΥ'('ς'|'Σ') SPACE? ('ΑΥΤΟΥΣ' | 'ΑΥΤΟΎΣ') ((SPACE '-')? | ('.'))? |
+    'Γ Ι Α Τ Ο Υ Σ Λ Ο Γ Ο Υ Σ Α Υ Τ Ο Υ Σ' |
+    'Για' SPACE? 'τους' SPACE? ('λόγους'|'λογους') SPACE? 'αυτούς' |
     'ΓΙΑ' SPACE 'ΤΟΥΣ' SPACE 'ΑΝΩΤΕΡΩ' SPACE 'ΛΟΓΟΥΣ'   |   //Poiniki ypothesi 1318/2010
+    //'ΓΙΑ ΤΟΥΣ ΛΟΓΟΥς ΑΥΤΟΥΣ' |
     'ΔΙΑ ΤΑΥΤΑ'
     ;
 
