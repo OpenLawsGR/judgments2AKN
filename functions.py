@@ -142,6 +142,46 @@ def subs_text(text, lst):
     return text
 
 
+def clean_text(src, dest, garbage_list, namePattern=None):
+    """This function performs a necessary preprocess step including
+    garbage removal, escaping XML invalid characters etc. and then stores
+    new file to a user defined folder
+
+    Args:
+        src: The root directory that will be traversed with os.walk()
+        dest: A path to store cleaned legal texts
+        garbage_list: A list of regular expressions that removes noise text 
+        namePattern: If namePattern is specified only file names that
+            match the namePattern will be accessed
+
+    Returns:
+        Nothing 
+    """
+    file_pattern = '*.txt'
+    if namePattern is not None:
+        file_pattern = namePattern
+        
+    for root, dirs, files in os.walk(src):
+        #print root
+        #print root.replace(src, dest)
+        if not os.path.exists(root.replace(src, dest)):
+            os.makedirs(root.replace(src, dest))
+
+        for name in files:
+            if fnmatch.fnmatch(name, file_pattern):
+                #print name
+                # modify file name so that no dot is present
+                new_file_name = os.path.splitext(name)[0].replace('.', '') + '.txt'
+                #print new_fil_name
+                with open(os.path.join(src, name), 'r') as fin:
+                    data = fin.read()
+                    text = subs_text(data, garbage_list)
+                    fout = codecs.open(os.path.join(dest, new_file_name), 'w', 'UTF-8')
+                    fout.write(escapeXMLChars(text).decode('UTF-8'))
+                    fout.close()
+    print("Done...")
+
+
 def GrToLat(src, namePattern=None):
     """This function changes all greek characters in a file name to the
     corresponding Latin based on user keyboard. This is done due to brat
