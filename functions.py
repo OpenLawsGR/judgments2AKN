@@ -143,13 +143,14 @@ def subs_text(text, lst):
 
 
 def GrToLat(src, namePattern=None):
-    """Changes all greek characters in a file name to Latin (in Windows mode).
-       This is done due to brat which does not support greek names 
+    """This function changes all greek characters in a file name to the
+    corresponding Latin based on user keyboard. This is done due to brat
+    tool which does not support greek names 
 
     Args:
-        path: The root directory that will be traversed with os.walk() 
-        namePattern: If namePattern is specified only file names that match the pattern will be
-            transformed to latin
+        src: The root directory that will be traversed with os.walk() 
+        namePattern: If namePattern is specified only file names that
+            match the pattern will be transformed (fnamtch is used)
 
     Returns:
         Nothing 
@@ -159,30 +160,22 @@ def GrToLat(src, namePattern=None):
     else:
         filePattern = '*.txt'
         
-    for dirpath, dirnames, filenames in os.walk(src, topdown=True):
-        for name in filenames:
+    for root, dirs, files in os.walk(src, topdown=True):
+        for name in files:
             if fnmatch.fnmatch(name, filePattern):
                 print "old_name: "+ name
                 old_name = name
-                for char in name:
-                    #print char.decode('utf-8')
-                    #print char.decode('windows-1253')
-                    for key, value in grToLat.items():
-                        if os.name != 'posix':
+                # it seems that in windows we need a sligthly
+                # different approach
+                if os.name != 'posix':
+                    for char in name:
+                        for key, value in grToLat.items():
                             if char.decode('windows-1253') == key.decode('utf-8'):
-                                #print key.decode('utf-8')
-                                #print value
-                                #print name.replace(char, value)
                                 name = re.sub(char, value, name)
-                        else:
-                            if char == key:
-                                #print key.decode('utf-8')
-                                #print value
-                                #print name.replace(char, value)
-                                name = re.sub(char, value, name)
-                    #print char
-                    #print grToLat.get(char)
-                    #name = re.sub(char, grToLat.get(char), name)
+                # linux operating system
+                else:
+                    for key, value in grToLat.items():
+                        name = re.sub(key, value, name)
                 print "GrToLat: "+ name
                 os.rename(os.path.join(dirpath, old_name), os.path.join(dirpath, name))
     print("Done...")
