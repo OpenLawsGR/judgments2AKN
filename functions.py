@@ -6,7 +6,6 @@ import fnmatch
 import requests
 import logging
 import subprocess
-import textwrap
 import shutil
 import codecs
 import datetime
@@ -14,80 +13,97 @@ from lxml import etree
 from lxml import html
 from variables import *
 
-
 Akn_LOGGER = logging.getLogger('Akn_LOGGER')
 
-def pdfToText(src, dest):
-    """Traverses source folder and calls pdftotext to transform any PDF file
-    to TXT file. It is based on fnmatch module so files must have an extension
-
-    Args:
-        src: The src directory that will be traversed with os.walk()
-        
-        dest: Destination folder where TXT files will be stored
-
-    Returns:
-        Nothing
-    """          
-    for dirpath, dirnames, filenames in os.walk(src, topdown=True):
-
-        # create destination folder if it doesn't exist
-        if not os.path.exists(dirpath.replace(src, dest)):
-            os.makedirs(dirpath.replace(src, dest))
-
-        for name in filenames:
-            if fnmatch.fnmatch(name, '*.pdf'):
-                #print name
-                #print os.path.join(dirpath,name)
-                #subprocess.call(["pdf2txt.py",
-                #                 "-o",
-                #                 os.path.join(DEST_FOLDER,name).split('.')[0]+".txt",
-                #                 os.path.join(dirpath,name)]) 
-                subprocess.call(["pdftotext",
-                                 #"-layout",
-                                 "-raw",
-                                 #"-nopgbrk",
-                                 os.path.join(dirpath,name),
-                                 os.path.join(dirpath.replace(src, dest),name).split('.')[0]+".txt"
-                                 ])
-
-                
-def copyFiles(src, dest):
-    """Traverses source folder and copy all .txt files to destination folder. It is based on
-    fnmatch module so files must have an extension
+def pdf_to_text(src, dest, name_pattern=None):
+    """Transforms PDF files to texts using pdftotext command
+    (https://linux.die.net/man/1/pdftotext). Newly created files are
+    stored to dest (destination) path.
 
     Args:
         src: The source directory that will be traversed with os.walk()
         
-        dest: Destination folder where TXT files will be copied
+        dest: Destination folder where '.txt' files will be stored
+
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be transformed from PDF to text
+
+    Returns:
+        Nothing
+    """
+    file_pattern = '*' + PDF_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
+        
+    for root, dirs, files in os.walk(src, topdown=True):
+        #print root.replace(src, dest)
+        #sys.exit()
+        # create destination folder if it does not exist
+        if not os.path.exists(root.replace(src, dest)):
+            os.makedirs(root.replace(src, dest))
+
+        for name in files:
+            if fnmatch.fnmatch(name, file_pattern):
+                subprocess.call(
+                    ["pdftotext",
+                     #"-layout",
+                     "-raw",
+                     #"-nopgbrk",
+                     os.path.join(root, name),
+                     os.path.join(
+                         root.replace(src, dest),
+                         name
+                         ).split('.')[0] + TXT_EXT]
+                    )
+
+    print("Done...")
+
+                
+def copy_files(src, dest, name_pattern=None):
+    """Copy all '.txt' files from src (source) to dest (destination) folder.
+
+    Args:
+        src: The source directory that will be traversed with os.walk()
+        
+        dest: Destination folder where '.txt' files will be copied
+
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be copied
 
     Returns:
         Nothing 
     """
+    file_pattern = '*' + TXT_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
+        
     if not os.path.exists(dest):
         os.makedirs(dest)
         
-    for dirpath, dirnames, filenames in os.walk(src, topdown=True):
-        #print dirpath.split('/')[-1]
-        for name in filenames:
-            if fnmatch.fnmatch(name, '*.txt'):
-                if dest.split('/')[-2] in ('areios_pagos'):
-                    ext = '.txt'
-                    newFileName = name.replace('Αρ.', 'Αρ').split('.txt')[0] + ext
-                else:
-                    year = os.path.join(dirpath, name).split('/')[-2]
-                    ext = name.split('.')[1]
-                    newFileName = name.split('.')[0]+"_" + year + "." + ext
-                
-                shutil.copy(os.path.join(dirpath, name), os.path.join(dest, name))
-                os.rename(os.path.join(dest, name), os.path.join(dest, newFileName))
+    for root, dirs, files in os.walk(src, topdown=True):
+        for name in files:
+            if fnmatch.fnmatch(name, file_pattern):             
+                shutil.copy(
+                    os.path.join(
+                        root,
+                        name
+                        ),
+                    os.path.join(
+                        dest,
+                        name
+                        )
+                    )
 
- 
+    print ("Done...")
+
+
 def create_rules(fileObj):
-    """Creates a dictionary of key - values pairs. Used by replaceChars function
+    """Creates a dictionary of key - values pairs. Used by replaceChars
+    function
 
     Args:
-        fileObj: A file object with lines in the following format (no spaces) old_char=new_char 
+        fileObj: A file object with lines in the following format (no spaces)
+            old_char=new_char 
         
     Returns:
         A python dictionary with key - value pairs 
@@ -102,14 +118,15 @@ def create_rules(fileObj):
 
 
 def replaceChars(text, dictionary={}):
-    """This method replaces characters of a text with new ones
-    based on a dictionary. It is used to fix damaged characters that exists
-    in .txt files (mainly in National Printing Service)
+    """Replaces characters of a text with new ones based on a dictionary.
+    Mainly used for fixing damaged characters that are present in '.txt'
+    files.
 
     Args:
         text: The text that needs to be fixed
         
-        dictionary: A hash map that contains key(old characters) - value(new characters) pairs.   
+        dictionary: A hash map that contains pairs of
+            key(old characters) - value(new characters)   
         
     Returns:
         text: New text containing fixed characters 
@@ -126,8 +143,7 @@ def replaceChars(text, dictionary={}):
 
 
 def subs_text(text, lst):
-    """Same as replaceChars function but uses a list instead of a dictionary.
-    Collects and removes garbages based on regexes (PDF paging etc.)
+    """Same as replaceChars but uses a list instead of a dictionary.
 
     Args:
         text: The text that will be substitute
@@ -139,27 +155,107 @@ def subs_text(text, lst):
     """
     for n in range(0,len(lst)):
         text = re.sub(lst[n][0], lst[n][1], text, flags=re.DOTALL)
+
     return text
 
 
-def clean_text(src, dest, garbage_list, namePattern=None):
-    """This function performs a necessary preprocess step including
-    garbage removal, escaping XML invalid characters etc. and then stores
-    new file to a user defined folder
+def clean_ste_text(src, dest, name_pattern=None):
+    """Performs pre-processing steps for judgments published by the
+    Council of State. By default it reads the first ten lines of a
+    judgment that contains metadata (see ste_scapper) and creates the
+    appropriate path to store metadata file. The rest of the text
+    (judgment body) will be cleaned and stored according to dest
+    (destination) parameter 
 
     Args:
         src: The root directory that will be traversed with os.walk()
-        dest: A path to store cleaned legal texts
-        garbage_list: A list of regular expressions that removes noise text 
-        namePattern: If namePattern is specified only file names that
-            match the namePattern will be accessed
+
+        dest: A path to store cleaned data
+
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be accessed
 
     Returns:
         Nothing 
     """
-    file_pattern = '*.txt'
-    if namePattern is not None:
-        file_pattern = namePattern
+    
+    file_pattern = '*' + TXT_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
+    
+    for root, dirs, files in os.walk(src):
+        #print src
+        #print dest
+        metadata_path = dest.replace(STE, STE_METADATA)
+        #print metadata_path
+        # create a corresponding folder based on 'dest' argument
+        if not os.path.exists(root.replace(src, dest)):
+            os.makedirs(root.replace(src, dest))
+
+        # create a corresponding metadata folder based on 'dest' argument  
+        if not os.path.exists(metadata_path):
+            os.makedirs(metadata_path)
+
+        for name in files:
+            #print 'name:' + name
+            # create new file name so that it contains year of publication
+            year = os.path.basename(src)
+            new_file_name = name.split('.')[0] + '_' + str(year) 
+            if fnmatch.fnmatch(name, file_pattern):
+                # declare full path for metadata file
+                metadata_file_path = os.path.join(
+                    metadata_path,
+                    new_file_name + '_meta' + TXT_EXT
+                    )
+                #print 'metaFilePath: '+ metaFilePath
+                with open(os.path.join(src, name), 'r') as fin:
+                    # by default the first 10 lines contain metadata
+                    # see ste crawler
+                    judgmentText_ = fin.readlines()
+                    metadata = ''
+                    judgmentBody = ''
+
+                    for line in judgmentText_[:10]:
+                        metadata += line
+
+                    for line in judgmentText_[11:]:
+                        judgmentBody += line
+                        
+                    # open a new file for writing metadata
+                    with open(metadata_file_path, 'w') as fhead:
+                        fhead.write(metadata)
+                    
+                    # open a new file for writing body
+                    with open(os.path.join(dest, new_file_name + TXT_EXT), 'w') as fbody:
+                        fbody.write(escapeXMLChars(
+                            subs_text(
+                                judgmentBody,
+                                SteGarbages
+                                )
+                            )
+                        )
+    print("Done...")
+                
+    
+def clean_areios_pagos_text(src, dest, name_pattern=None):
+    """Performs pre-processing steps for judgments published by the
+    Supreme Civil and Criminal Court (Areios Pagos) and stores new file(s)
+    in dest (destination) folder.
+
+    Args:
+        src: The root directory that will be traversed with os.walk()
+
+        dest: A path to store cleaned data
+
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be accessed
+
+    Returns:
+        Nothing 
+    """
+    file_pattern = '*' + TXT_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
         
     for root, dirs, files in os.walk(src):
         #print root
@@ -171,39 +267,111 @@ def clean_text(src, dest, garbage_list, namePattern=None):
             if fnmatch.fnmatch(name, file_pattern):
                 #print name
                 # modify file name so that no dot is present
-                new_file_name = os.path.splitext(name)[0].replace('.', '') + '.txt'
+                new_file_name = os.path.splitext(name)[0].replace('.', '') + TXT_EXT
                 #print new_fil_name
                 with open(os.path.join(src, name), 'r') as fin:
-                    data = fin.read()
-                    text = subs_text(data, garbage_list)
-                    fout = codecs.open(os.path.join(dest, new_file_name), 'w', 'UTF-8')
-                    fout.write(escapeXMLChars(text).decode('UTF-8'))
+                    text = fin.read()
+                    cleaned_text = subs_text(text, AreiosPagosGarbages)
+                    fout = codecs.open(
+                        os.path.join(dest, new_file_name),
+                        'w',
+                        'UTF-8'
+                        )
+                    fout.write(escapeXMLChars(cleaned_text).decode('UTF-8'))
                     fout.close()
+
     print("Done...")
 
 
-def GrToLat(src, namePattern=None):
-    """This function changes all greek characters in a file name to the
-    corresponding Latin based on user keyboard. This is done due to brat
-    tool which does not support greek names 
+def clean_nsk_text(src, dest, name_pattern=None):
+    """Performs pre-processing steps for legal opinions published by the
+    Legal Council of State and stores new file(s) in dest (destination)
+    folder.
 
     Args:
-        src: The root directory that will be traversed with os.walk() 
-        namePattern: If namePattern is specified only file names that
-            match the pattern will be transformed (fnamtch is used)
+        src: The root directory that will be traversed with os.walk()
+
+        dest: A path to store cleaned data
+
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be accessed
 
     Returns:
         Nothing 
     """
-    if namePattern is not None:
-        filePattern = namePattern
-    else:
-        filePattern = '*.txt'
+    HEADER = r'(^.*?(?=Aριθμός|Αριθυός|Αριθμός|Αριθµός|ΑΤΟΜΙΚΗ|ΓNΩΜΟΔΟΤΗΣΗ|ΑΡΙΘ.\s*ΓΝΩΜΟ∆ΟΤΗΣΕΩΣ|Γ Ν Ω Μ Ο Δ Ο Τ Η Σ Η|Αρ. Γνωµ/σεως|Γνωμοδότηση|ΓΝΩΜΟ∆ΟΤΗΣΗ|ΓΝΩΜΟΔΟΤΗΣΗ|ΓΝΩΜΟΔΟΤΗΣΗ|ΑΡΙΘΜΟΣ))'
+
+    file_pattern = '*' + TXT_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
+
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+    
+    for root, dirs, files in os.walk(src):
+        for name in files:
+            if fnmatch.fnmatch(name, file_pattern):
+                print name
+                with open(os.path.join(src, name), 'r') as fin:
+                    text = fin.read()
+                    cleaned_text = subs_text(text, nskGarbages)
+                    cleaned_text = re.sub(
+                        HEADER,
+                        '',
+                        cleaned_text,
+                        flags=re.DOTALL
+                        )
+                    # many legal opinions missing embeded text ending
+                    count = 0
+                    changed_text = ''
+                    for char in cleaned_text.decode('utf-8'):
+                        if char == '«'.decode('utf-8') or char == '»'.decode('utf-8') :
+                            if char == '«'.decode('utf-8'):
+                                count += 1
+                                changed_text += char
+                            elif char == '»'.decode('utf-8'):
+                                count -= 1
+                                if count == 0:
+                                    changed_text += char
+                                else:
+                                    changed_text += '@' + char
+                        else:
+                            changed_text += char
+                    if count != 0 :
+                        print "Warning: missing embeded text ending!"
+                    #print changed_text
+                    fout = codecs.open(
+                        os.path.join(dest, name),
+                        'w',
+                        'UTF-8'
+                        )
+                    fout.write(escapeXMLChars(changed_text))
+                    fout.close()
+
+    print("Done...")
+
+
+def GrToLat(src, name_pattern=None):
+    """Changes all greek characters in a file name to the corresponding latin
+    based on qwerty keyboard. 
+
+    Args:
+        src: The root directory that will be traversed with os.walk() 
+
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be transformed
+
+    Returns:
+        Nothing 
+    """
+    file_pattern = '*' + TXT_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
         
     for root, dirs, files in os.walk(src, topdown=True):
         for name in files:
-            if fnmatch.fnmatch(name, filePattern):
-                print "old_name: "+ name
+            if fnmatch.fnmatch(name, file_pattern):
+                #print "old_name: "+ name
                 old_name = name
                 # it seems that in windows we need a sligthly
                 # different approach
@@ -216,65 +384,85 @@ def GrToLat(src, namePattern=None):
                 else:
                     for key, value in grToLat.items():
                         name = re.sub(key, value, name)
-                print "GrToLat: "+ name
-                os.rename(os.path.join(dirpath, old_name), os.path.join(dirpath, name))
+                #print "GrToLat: "+ name
+                os.rename(
+                    os.path.join(
+                        root,
+                        old_name),
+                    os.path.join(
+                        root,
+                        name
+                        )
+                    )
+
     print("Done...")
 
 
-def checkForSummaries(src, metadata_path=None, namePattern=None):
-    """Check if a judgment contains summary of the decision and deletes
-    corresponding file
+def delete_summaries(src, metadata_path=None, name_pattern=None):
+    """Checks if legal text(s) contain(s) summary of the decision and deletes
+    corresponding file. If metadata_path is defined it also deletes the
+    corresponding metadata file.
 
     Args:
-        src: The root directory that contains files
+        src: The root directory that contains text files
 
-        metadata_path: If specified this is the path where metadata is stored. It will
-            also delete the corresponding metadata file (if it exists)
+        metadata_path: The path to file(s) where metadata is stored
 
-        namePattern: check if specific file contains summary
+        name_pattern: If name_pattern is specified only file names that
+            match the pattern will be checked for summaries
 
     Returns:
         Nothing
     """
-    
-    if namePattern is not None:
-        filePattern = namePattern
-    else:
-        filePattern = '*.txt'
+    file_pattern = '*' + TXT_EXT
+    if name_pattern is not None:
+        file_pattern = name_pattern
 
     # total number of files containing summaries
     cnt = 0
     for root, dirs, files in os.walk(src, topdown=True):
         #print root
-        year = os.path.basename(root)
+        #year = os.path.basename(root)
         for name in files:
-            hasSummary = 0
-            if fnmatch.fnmatch(name, filePattern):
-                with open(os.path.join(os.path.join(src, str(year)), name), 'r') as fin:
-                    summary = re.match(r'^\(Απόσπασμα\)|^Α\d+/\d+', fin.read(), re.DOTALL)
+            has_summary = 0
+            if fnmatch.fnmatch(name, file_pattern):
+                with open(os.path.join(src, name), 'r') as fin:
+                    summary = re.match(
+                        r'^\(Απόσπασμα\)|^Περίληψη',
+                        fin.read(),
+                        re.DOTALL
+                        )
                     #print summary
                     if summary:
-                        print "Found Judgment file with summary: " + name
-                        hasSummary = 1
+                        #print "Found Judgment file with summary: " + name
+                        has_summary = 1
                         cnt += 1
+                        
                         if metadata_path is not None:
-                            metaFileExists = os.path.isfile(os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt')))
-                            #print os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt'))
-                            if metaFileExists:
-                                print "Metadata File exists: " + name
-                                print "Removing: " + os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt'))
-                                os.remove(os.path.join(os.path.join(metadata_path, str(year), name.split('.')[0]+'_meta.txt')))
-
-                if hasSummary == 1:
-                    print "Removing: " + os.path.join(os.path.join(src, str(year)), name)
-                    os.remove(os.path.join(os.path.join(src, str(year)), name))
+                            meta_file_path = os.path.join(
+                                    os.path.join(
+                                        metadata_path,
+                                        #str(year),
+                                        name.split('.')[0]+'_meta' + TXT_EXT
+                                        )
+                                    )
+                            #print meta_file_path
+                            meta_file_xists = os.path.isfile(meta_file_path)
+                            if meta_file_xists:
+                                #print "Metadata File exists, removing: " + meta_file_path
+                                os.remove(meta_file_path)
+                        
+                if has_summary == 1:
+                    #print "Removing: " + os.path.join(src, name)
+                    os.remove(os.path.join(src, name))
 
     print "Complete removing summaries. Total Files removed: " + str(cnt)
 
-    
-def fixFek(path):
-    """For issues between 2000-2005 pdf encoding is damaged. This is only
-        for pdfotetxt not pdfminer! This function fixes characters using replace all
+
+def fix_fek(path):
+    """For issues between 2000-2005 PDFs encoding downloaded from National
+    Printing Service is damaged. This function fixes characters using
+    replaceChars
 
     Args:
         path: The root directory that will be traversed with os.walk()
@@ -284,7 +472,7 @@ def fixFek(path):
     """
     for dirpath, dirnames, filenames in os.walk(path, topdown=True):
         for name in filenames:
-            if fnmatch.fnmatch(name, '*.txt'):
+            if fnmatch.fnmatch(name, TXT_EXT):
                 with open(os.path.join(dirpath,name)+"_pre_", "wt") as fout, open(os.path.join(dirpath,name), "r") as fin:
                     mytext = fin.read()
                     text = replaceChars(mytext)
@@ -293,43 +481,18 @@ def fixFek(path):
                     os.rename(os.path.join(dirpath, name)+"_pre_", os.path.join(dirpath, name))
 
 
-def countPDFPages(path):
-    """This function counts the number of Pages of all PDF stored in path
-    
-    Args:
-        path: The root directory that will be traversed with os.walk()
-
-    Returns:
-        count: The total number of pages 
-    """
-    count = 0
-    for dirpath, dirnames, filenames in os.walk(path, topdown=True):
-        for name in filenames:
-            if fnmatch.fnmatch(name, '*.pdf'):
-                #print name
-                try:
-                    cmd = subprocess.check_output(["pdfinfo",
-                                 "-meta",
-                                 os.path.join(dirpath,name)
-                                 ])
-                    num = re.findall(r'Pages:\s*(\d+)', cmd)[0]
-                    count += int(num)
-                except subprocess.CalledProcessError:
-                    pass
-    return count
-
-
 def valid_xml_char_ordinal(c):
-    '''Function that filters out certain bytes when XML is
-    constructed. XML standard defines a valid character as:
-    Char ::= #x9 | #xA | #xD | [#x20 - #xD7FF] | [#xE000 - #xFFFD] | [#x10000 - #x10FFFF]
+    """Filters out certain bytes so that XML files contains valid
+    characters. XML standard defines a valid character as:
+    Char ::= #x9 | #xA | #xD | [#x20 - #xD7FF] |
+            [#xE000 - #xFFFD] | [#x10000 - #x10FFFF]
 
     Args:
         c: Character to be checked
 
     Returns:
         true if character codepoint in valid range
-    '''
+    """
     codepoint = ord(c)
     #conditions ordered by presumed frequency
     return (
@@ -341,14 +504,15 @@ def valid_xml_char_ordinal(c):
 
 
 def escapeXMLChars(text):
-    '''Controls characters that need to be escaped (to obtain a well-formed document)
+    """Controls characters that need to be escaped (to obtain a well-formed
+    XML document)
 
     Args:
         text: The text that will be escaped (string)
 
     Returns:
-        text: The text containing XML entities instead of characters (string)
-    '''
+        text: new text containing XML entities instead of characters (string)
+    """
     text = text.replace("&", "&amp;")
     #text = text.replace("\"", "&quot;")
     #text = text.replace("'", "&apos;")
@@ -358,19 +522,19 @@ def escapeXMLChars(text):
 
 
 def validateXML (schemaFile, xmlFile, logFile):
-    '''Creates/Open a log file for an XML file that contains information
-    about errors based on a Schema file. SchemaFile must be an XSD file
+    """Validates a XML file against a XML schema and stores error info
+    in a log file
     
     Args:
-        schemaFile: File that contains the XML schema
+        schemaFile: The XML schema file
         
-        xmlFile: XML file that is used to check if it is valid based on the XSD
+        xmlFile: XML file to be checked if it is valid
         
         logFile: Log file where errors will be written
         
     Returns:
         nothing
-    '''
+    """
     xmlSchemaDoc = etree.parse(schemaFile)
     xmlSchema = etree.XMLSchema(xmlSchemaDoc)
     xml_doc = etree.parse(xmlFile)
@@ -391,19 +555,12 @@ def validateXML (schemaFile, xmlFile, logFile):
             Akn_LOGGER.error('level: ' + str(error.level))
             Akn_LOGGER.error('line: ' + str(error.line))
             Akn_LOGGER.error('message: ' + error.message)
-            #print 'domain_name: '+error.domain_name
-            #print('domain_name: '+error.domain_name)
-            #print('domain: ' + str(error.domain))
-            #print('filename: ' + error.filename)
-            #print('level: ' + str(error.level))
-            #print('line: ' + str(error.line))
-            #print('message: ' + error.message)
     except:
         #error_log_file.write('XML valid: False\n')
         Akn_LOGGER.info('XML valid: False')
         Akn_LOGGER.info('unknown error!')
         #error_log_file.write('unknown error!')
-        #print('unknown error')
+
 
 def CheckXMLvalidity (schemaFile, xmlFile):
     """Checks if a certain XML file is valid against a schema file.
@@ -411,10 +568,10 @@ def CheckXMLvalidity (schemaFile, xmlFile):
     Args:
         schemaFile: The path to the schema file
         
-        xmlFile: The XML file that needs to be tested
+        xmlFile: The XML file to be checked
 
     Returns:
-        True (if it is valid) or False (if it is not) 
+        True or False 
     """
     xmlSchemaDoc = etree.parse(schemaFile)
     xmlSchema = etree.XMLSchema(xmlSchemaDoc)
@@ -423,15 +580,16 @@ def CheckXMLvalidity (schemaFile, xmlFile):
 
 
 def createHrefFromDictionary (dictionary, splitMultHref = 0, element = 0):
-    '''Creates an AkomaNtoso href attribute based on a dictionary of elements
+    """Creates an AkomaNtoso href attribute based on a dictionary of elements
     
     Args:
-        dictionary: A dictionary containing context nodes with elements. Possible keys
-            are type, legalYear, legalNumber, ExplicitArthroContext, ExplicitParContext etc.
+        dictionary: A dictionary containing context nodes with elements.
+            Possible keys: type, legalYear, legalNumber,
+            ExplicitArthroContext, ExplicitParContext etc.
 
     Returns:
-        href : A unicode href attribute
-    '''
+        href: A unicode href attribute
+    """
     href = ''
 
     if dictionary.get('type'):
@@ -473,30 +631,34 @@ def createHrefFromDictionary (dictionary, splitMultHref = 0, element = 0):
 
 
 def findDatesOfInterest(searchNodeElem, regexObj, dateName, author):
-    '''Function that searches for specific dates (e.g. publication date) in a legal text and
-    returns a new text containing xml labels about them
+    """Searches for specific dates (e.g. publication date) in a legal text
+    and returns a new text containing xml labels about extracted dates
 
     Args:
-        searchNodeElem: The AkomaNtoso node that we would like to search
+        searchNodeElem: The AkomaNtoso node to be searched
         
         regexObj: A compiled regex object that we use for different dates
         
-        dateName: The name of the date of interest for example "courtConferenceDate"
+        dateName: The name of the date of interest
+            (for example "courtConferenceDate") to be written in node
         
-        author: The author is used when creating the attribute 'by' of the "step" sublement in
-                the meta section of akoma Ntoso
+        author: The author is used when creating the attribute 'by'
+                of the "step" sublement in the meta section of akoma Ntoso
                 
     Returns:
         searchNodeElem: A new node after finding all dates
-        DateStep: An element that is to be written in workflow section of akomaNtoso metadata
-        DateTLCEvent: An element that is to be written in references section of AkomaNtoso metadata
-    '''
+        
+        DateStep: An element that is to be written in workflow
+            section of akomaNtoso metadata
+
+        DateTLCEvent: An element that is to be written in references
+            section of AkomaNtoso metadata
+    """
     for child in searchNodeElem.getchildren():
         childText = etree.tostring(child, pretty_print=True, encoding = 'UTF-8')
         if childText:
             DateOfInterest = re.search(regexObj, childText)
             if DateOfInterest:
-                #print "vrethike"
                 #print DateOfInterest.group()
                 #print DateOfInterest.group('yyyy')
                 #print DateOfInterest.group('mm')
@@ -513,20 +675,32 @@ def findDatesOfInterest(searchNodeElem, regexObj, dateName, author):
                 searchNodeElem.insert(elemIndex, newNode)
                 
                 # create a TLCevent that will be passed to Akomantoso "references" node
-                DateStep = etree.Element("step", attrib={"date" : str(Date),
-                                                         'by' : author, "refersTo" : '#'+dateName})
+                DateStep = etree.Element(
+                    "step",
+                    attrib = {
+                        "date" : str(Date),
+                        'by' : author,
+                        "refersTo" : '#'+dateName
+                        }
+                    )
 
                 
-                DateTLCEvent = etree.Element("TLCEvent", attrib={"eId" : dateName,
-                                                             "href":"/akn/ontology/event/gr/"+dateName,
-                                                             "showAs": importantDates.get(dateName, 'no_important_date_found').decode('utf-8')
-                                                                 })
+                DateTLCEvent = etree.Element(
+                    "TLCEvent",
+                    attrib = {
+                        "eId": dateName,
+                        "href":"/akn/ontology/event/gr/"+dateName,
+                        "showAs": importantDates.get(
+                            dateName,
+                            'no_important_date_found').decode('utf-8')
+                        }
+                    )
 
                 return searchNodeElem, DateStep, DateTLCEvent
 
 
 def extractDataFromRequests(url, paramsData):
-    '''Uses requests libary to extract data from NSK
+    """Uses requests libary to extract data from NSK
     based on search form
 
     Args:
@@ -536,7 +710,7 @@ def extractDataFromRequests(url, paramsData):
 
     Returns:
         dict: A dictionary containin several information such as keywords etc.
-    '''
+    """
     extractedData = {}
     try:
         req = requests.post(url, params=paramsData)
@@ -589,7 +763,9 @@ def setupLogger(logger_name, log_file, level = logging.DEBUG):
         logger.removeHandler(handler)
 
     file_handler = logging.FileHandler(log_file, mode='w')
-    formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s - %(message)s")
+    formatter = logging.Formatter(
+        "%(asctime)s - %(filename)s - %(levelname)s - %(message)s"
+        )
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
@@ -597,9 +773,10 @@ def setupLogger(logger_name, log_file, level = logging.DEBUG):
 
 
 def textToNumbering(text, dictionary):
-    """Function that converts a small text to the corresponding ID (naming convention).
-    This is due the fact that legislators sometimes refer to an element not using a
-    number but a combination of number and a string eg 32A, First, Second etc.
+    """Converts a small text to the corresponding ID (naming convention).
+    This is due the fact that legislators sometimes refer to an element
+    not using a number but a combination of number and a string
+    eg 32A, First, Second etc.
 
     Args:
         text: A portion of text
@@ -607,11 +784,12 @@ def textToNumbering(text, dictionary):
         dictionary: A dictionary that holds values
         
     Returns:
-        elemID: The corresponding element id based on a dictionary of values
+        elemID: The corresponding element id
         
     """
     elemID = []
-    # Problem with python Greek letters, convert dictionary keys and values to unicode text
+    # Problem with python Greek letters,
+    # convert dictionary keys and values to unicode text
     unidict = {unicode(k, encoding='UTF-8'): v for k, v in dictionary.items()}
     
     #convert text to unicode
@@ -635,7 +813,7 @@ def textToNumbering(text, dictionary):
 
 
 def getTokenName(context, funcList, Dict, defaultVal):
-    """Get the token name of a rule context that triggered this grammar rule.
+    """Get the token name of a rule context that triggered a grammar rule.
     It is used only for Code Laws and Courts
 
     Args:
@@ -669,8 +847,8 @@ def getTokenName(context, funcList, Dict, defaultVal):
 
 
 def fixStringXML(text, regPatternObj):
-    """This method fixes the XML string in order to be a valid XML string.
-    It is used for cases where a ref tag closes after a new paragraph tag (</p><p>)
+    """Fixes the XML string in order to be a valid XML string. It is used
+    for cases where a ref tag closes after a new paragraph tag (</p><p>)
 
     Args:
         text: The text to be fixed
@@ -685,6 +863,11 @@ def fixStringXML(text, regPatternObj):
         for string in refString:
             #print 'string in list:' +string
             if re.search(regPatternObj, string):
-                newString = string.replace(re.search(regPatternObj, string).group(0), ' ')
+                newString = string.replace(
+                    re.search(
+                        regPatternObj,
+                        string
+                        ).group(0),
+                    ' ')
                 text = text.replace(string, newString)
     return text

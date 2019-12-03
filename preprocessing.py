@@ -1,225 +1,209 @@
 # -*- coding: utf-8 -*-
+import argparse
 import fnmatch
 import os
+import sys
 import codecs
-from functions import pdfToText, GrToLat, subs_text, escapeXMLChars
-from functions import checkForSummaries
-from variables import SteGarbages, AreiosPagosGarbages, nskGarbages, grToLat
+import time
+from functions import clean_areios_pagos_text, clean_ste_text, clean_nsk_text 
+from functions import delete_summaries, pdf_to_text, copy_files, GrToLat
+from variables import TXT_EXT, PDF_EXT, STE, NSK, NSK_TMP, AREIOS_PAGOS
+from variables import STE_METADATA, NSK_METADATA, NSK_CSTM_METADATA
 
-BASE_URL_MAIN =  os.path.join(os.getcwd(), 'legal_crawlers/data')
-BASE_URL_DEST = os.path.join(os.getcwd(), 'pdftotext')
-#RULES_FILE = os.path.join(os.getcwd(), 'replacements')
+program_description = 'A Command Line Interface for implementing the '
+program_description += 'pre-processing steps for judgments and legal pinions '
+program_description += 'of the three major legal authorities of Greece. '
+program_description += 'Pre-processing steps include garbage removal,'
+program_description += 'escaping XML invalid characters and metadata '
+program_description += 'storage management (if available)' 
 
-#declare which folder to start from
-FOLDER_PATH = r'ste'
+parser = argparse.ArgumentParser(
+    description = program_description,
+    epilog = 'Enjoy the program!'
+    )
 
-#declare ste metadata folder name
-STE_METADATA = r'ste_metadata'
-STE_METADATA_FOLDER = os.path.join(BASE_URL_DEST, STE_METADATA)
+legal_authority_help = 'run pre-processing steps for a specific legal '
+legal_authority_help += 'authority (accepted values: %(choices)s)'
+parser.add_argument(
+    'legal_authority',
+    metavar = 'legal_authority',
+    choices = [AREIOS_PAGOS, STE, NSK],
+    help = legal_authority_help
+    )
+
+src_help = 'define base folder where judgments and legal opinions ' 
+src_help += 'are stored (default is legal_crawlers\data). A different path '
+src_help += 'can be provided if legal texts are stored in a different folder'
+parser.add_argument(
+    '-src',
+    default = os.path.join('legal_crawlers', 'data'),
+    metavar = 'SOURCE',
+    help = src_help
+    )
+
+dest_help = 'define a name for base folder where judgments and legal opinions ' 
+dest_help += 'will be stored after pre-processing (default is pdftotext)'
+parser.add_argument(
+    '-dest',
+    default = r'pdftotext',
+    metavar = 'DESTINATION',
+    help = dest_help
+    )
+
+year_help = 'choose a specific year for pre-processing (if absent ' 
+year_help += 'all years will be included)'
+parser.add_argument(
+    '-year',
+    help = year_help
+    )
+
+parser.add_argument(
+    '-fn',
+    metavar = 'FILENAME',
+    help = 'choose a specific file for pre-processing'
+    )
+
+# create a namespace object
+args = parser.parse_args()
 
 if __name__ == '__main__':
+    #print args
+
+    if args.src == args.dest:
+        parser.error(
+            'destination folder must be different from source folder'
+            )
+
+    if args.fn is not None:
+        if args.year is None and args.legal_authority not in (NSK):
+            parser.error(
+                'You must provide "year" parameter ' +
+                'in order to process a specific file'
+                )
+        else:
+            file_pattern = '*' + args.fn
+    else:
+        file_pattern = '*' + TXT_EXT
     
-    SRC = os.path.join(BASE_URL_MAIN, FOLDER_PATH)
-    DEST = os.path.join(BASE_URL_DEST, FOLDER_PATH)
-    folder = os.path.basename(SRC)
-    #print "Folder: " + folder
+
+    source_path = os.path.join(
+        os.getcwd(),
+        os.path.join(
+            args.src,
+            args.legal_authority
+            )
+        )
+
+    # legal opinions are not stored in folders by year of publication
+    if args.year is not None and args.legal_authority not in (NSK):
+        source_path = os.path.join(
+            source_path,
+            args.year
+            )
+
+    dest_path = os.path.join(
+        os.getcwd(),
+        os.path.join(
+            args.dest,
+            args.legal_authority
+            )
+        )
+
+    # legal opinions are not stored in folders by year of publication
+    if args.year is not None and args.legal_authority not in (NSK):
+        dest_path = os.path.join(dest_path, args.year)
     
-    if folder in ('nsk'):
-        # 1st step -> get text from pdf files
-        pdfToText(SRC, DEST)
+    #print source_path
+    #print dest_path
+    #print file_pattern
+    #sys.exit()
 
-        # 2st step -> create latin names of files
-        GrToLat(DEST)
+    if args.legal_authority in (AREIOS_PAGOS):
+        # 1st step: traverse src directory and clean text
+        print("Start cleaning data...")
+        time.sleep(2)
+        clean_areios_pagos_text(source_path, dest_path, file_pattern)
 
-        # 3rd step -> remove garbages from files
-        HEADER = r'(^.*?(?=Aριθμός|Αριθυός|Αριθμός|Αριθµός|ΑΤΟΜΙΚΗ|ΓNΩΜΟΔΟΤΗΣΗ|ΑΡΙΘ.\s*ΓΝΩΜΟ∆ΟΤΗΣΕΩΣ|Γ Ν Ω Μ Ο Δ Ο Τ Η Σ Η|Αρ. Γνωµ/σεως|Γνωμοδότηση|ΓΝΩΜΟ∆ΟΤΗΣΗ|ΓΝΩΜΟΔΟΤΗΣΗ|ΓΝΩΜΟΔΟΤΗΣΗ|ΑΡΙΘΜΟΣ))'
-        if not os.path.exists(os.path.join(BASE_URL_DEST, 'nsk_no_garbage')):
-            os.makedirs(os.path.join(BASE_URL_DEST, 'nsk_no_garbage'))
-        
-        for root, dirs, files in os.walk(DEST):
-            for name in files:
-                if fnmatch.fnmatch(name, '*.txt'):
-                    print name
-                    with open(os.path.join(DEST, name), 'r') as fin:
-                        text = fin.read()
-                        data = subs_text(text, nskGarbages)
-                        count = 0
-                        changedText = ''
-                        for char in data.decode('utf-8'):
-                            if char == '«'.decode('utf-8') or char == '»'.decode('utf-8') :
-                                if char == '«'.decode('utf-8'):
-                                    count += 1
-                                    changedText += char
-                                elif char == '»'.decode('utf-8'):
-                                    count -= 1
+        # 2nd step: create latin names of files
+        print("Creating latin names for file(s)...")
+        time.sleep(2)
+        GrToLat(dest_path)
 
-                                    if count == 0:
-                                        changedText += char
-                                    else:
-                                        changedText += '@' + char
-                                        #changedText += char
-                            else:
-                                changedText += char
-                        if count != 0 :
-                            print "Warning: missing embeded text ending!"
-                        #print changedText
-                        #print type(changedText)
-                        #sys.exit()
-                        fout = codecs.open(os.path.join(os.path.join(BASE_URL_DEST, 'nsk_no_garbage'), name), 'w', 'UTF-8')
-                        fout.write(escapeXMLChars(changedText))
-                        fout.close()
-            
-    elif folder in ('ste'):
-        # 1st step -> remove garbages from files
-        HEADER = r'(^.*?\n\s*(?=Ε.Ο. Aριθμός|Αριθμός|Aριθμός|Αριθμό|ΑΡΙΘΜΟΣ|ΣτΕ\s*\d+|ΟλΣτΕ\s*\d+|\(Απόσπασμα\)|\(Α π ό σ π α σ μ α\)))'
+        # 3rd step: some texts contain only summaries
+        # and not full decision body
+        # check for summaries and remove them
+        print("Start searching for summaries...")
+        time.sleep(2)
+        delete_summaries(dest_path)
 
-        # For every judgment into directory 'legal_crawlers/data/ste',
-        for year in range (1990, 2018):
-            for root, dirs, files in os.walk(os.path.join(SRC, str(year))):
-
-                # create a corresponding year folder into 'pdftotext/ste',
-                if not os.path.exists(os.path.join(DEST, str(year))):
-                    os.makedirs(os.path.join(DEST, str(year)))
-
-                # create a corresponding year folder into 'pdftotext' that holds metadata,  
-                if not os.path.exists(os.path.join(STE_METADATA_PATH, str(year))):
-                    os.makedirs(os.path.join(STE_METADATA_PATH, str(year)))
-
-                for name in files:
-                    # create new file name so that it contains year of publication
-                    new_file_name = name.split('.')[0] + '_' + str(year)
-
-                    if fnmatch.fnmatch(name, '*.txt'):
-                        print name
-                        # declare full path for each file where metadata will be stored  
-                        metaFilePath = os.path.join(os.path.join(STE_METADATA_PATH, str(year)), new_file_name + '_meta.txt')
-                        #print metaFilePath
-                        
-                        with open(os.path.join(os.path.join(SRC, str(year)), name), 'r') as fin:
-                            # by default the first 10 lines contain metadata
-                            # see ste crawler
-                            judgmentText_ = fin.readlines()
-                            metadata = ''
-                            judgmentBody = ''
-
-                            for line in judgmentText_[:10]:
-                                metadata += line
-
-                            for line in judgmentText_[11:]:
-                                judgmentBody += line
-                                
-                            # we open a new file for writing metadata
-                            with open(metaFilePath, 'w') as fhead:
-                                fhead.write(metadata)
-                                
-                            # we open a new file for writing body
-                            with open(os.path.join(os.path.join(DEST, str(year)), new_file_name + '.txt'), 'w') as fbody:
-                                fbody.write(escapeXMLChars(subs_text(judgmentBody, SteGarbages)))
-
-                            '''
-                            # 2nd option (read file until HEADER text and write accordingly)
-                            #judgmentText = fin.read()
-                            try:
-                                header = re.match(HEADER, judgmentText, re.DOTALL).group(0)
-                                judgmentBody = judgmentText.replace(header, '', 1)
-
-                                # Open a new file for writing metadata
-                                with open(metaFilePath, 'w') as fhead:
-                                    fhead.write(header)
-
-                                # Open a new file for writing body
-                                with open(os.path.join(os.path.join(DEST, str(year)), name), 'w') as fbody:
-                                    fbody.write(escapeXMLChars(subs_text(judgmentBody, SteGarbages)))
-
-                            # If no header exists write all text to new file
-                            except AttributeError:
-                                with open(os.path.join(os.path.join(DEST, str(year)), name), 'w') as fbody:
-                                    fbody.write(escapeXMLChars(subs_text(judgmentText, SteGarbages)))
-                                #pass
-                            '''
+    elif args.legal_authority in (STE):
+        # 1st step: traverse src directory and clean text
+        print("Start cleaning data...")
+        time.sleep(2)
+        clean_ste_text(source_path, dest_path, file_pattern)
 
         # 2nd step -> create latin names of files
-        GrToLat(DEST)
+        print("Creating latin names for file(s)...")
+        time.sleep(2)
+        GrToLat(dest_path)
 
         # 3rd step -> create latin names of metadata files
-        GrToLat(STE_METADATA_PATH)
+        print("Creating latin names for metadata file(s)...")
+        time.sleep(2)
+        GrToLat(dest_path.replace(STE, STE_METADATA))
 
-        # 4th step -> Chek for summaries in judgment files and remove them
-        checkForSummaries(DEST, STE_METADATA_PATH)
+        # 4th step -> chek for summaries and remove them
+        print("Start searching for summaries...")
+        time.sleep(2)
+        delete_summaries(dest_path, dest_path.replace(STE, STE_METADATA))
+
+    elif args.legal_authority in (NSK):
+        # 1st step -> get text from pdf files
+        # pdf_to_text deals with PDF files temporarily change extension
+        print("Converting PDF file(s) to text...")
+        time.sleep(2)
+        tmp_file_pattern = file_pattern.replace(TXT_EXT, PDF_EXT)
+        pdf_to_text(
+            source_path,
+            dest_path.replace(NSK, NSK_TMP),
+            tmp_file_pattern
+            )
+
+        # 2nd step -> clean text
+        print("Start cleaning data...")
+        time.sleep(2)
+        tmp_file_pattern = file_pattern.replace(PDF_EXT, TXT_EXT)
+        clean_nsk_text(
+            dest_path.replace(NSK, NSK_TMP),
+            dest_path,
+            tmp_file_pattern
+            )
         
-    elif folder in ('areios_pagos'):
-        # 1st step -> create latin names of files
-        GrToLat(DEST)
+        # 3rd step -> copy metadata files downloaded from diavgeia
+        # to a new destination
+        print("Copying metadata file(s) to dest...")
+        time.sleep(2)
+        #tmp_file_pattern = file_pattern.replace(PDF_EXT, TXT_EXT)
+        copy_files(
+            source_path,
+            dest_path.replace(NSK, NSK_METADATA),
+            tmp_file_pattern
+            )
+
+        # 4th step -> create latin names of files
+        print("Creating latin names for file(s)...")
+        time.sleep(2)
+        GrToLat(dest_path.replace(NSK, NSK_TMP))
+        GrToLat(dest_path)
+
+        # 5th step -> create latin names of metadata files
+        print("Creating latin names for metadata file(s)...")
+        time.sleep(2)
+        GrToLat(dest_path.replace(NSK, NSK_METADATA))
+
+        # TODO: 6th step -> download custom metadata from official
+        # Legal Council of State website
+        #print ("In order to create some appropriate Akoma Ntoso XML " +
+        #       "metadata nodes, you are advised to execute " +
+        #       "extractLegalOpinionsCstmMetadata.py (with no arguments)")
         
-        # 2st step -> create latin names of metadata files Traverse directory 'areios_pagos'
-        # inside directory 'legal_crawlers', remove garbages, escape XML invalid characters
-        # and write text to a new destination
-        for year in range (1990, 2019):
-            for root, dirs, files in os.walk(os.path.join(SRC, str(year))):
-                #print os.path.join(SRC, str(year))
-
-                if not os.path.exists(os.path.join(DEST, str(year))):
-                    os.makedirs(os.path.join(DEST, str(year)))
-                
-                for name in files:
-                    if fnmatch.fnmatch(name, '*.txt'):
-                        print name
-                        # remove dots from basename
-                        filename = os.path.splitext(name)[0].replace('.', '') + '.txt'
-                        with open(os.path.join(os.path.join(SRC, str(year)), name), 'r') as fin:
-                            data = fin.read()
-                            text = subs_text(data, AreiosPagosGarbages)
-                            #print text
-                            fout = codecs.open(os.path.join(os.path.join(DEST, str(year)), filename), 'w', 'UTF-8')
-                            fout.write(escapeXMLChars(text).decode('utf-8'))
-                            fout.close()
-
-        #sys.exit()
-
-        # 3rd step -> Chek for summaries in judgment files and remove them
-        cnt = 0
-        for year in range (1990, 2019):
-            for root, dirs, files in os.walk(os.path.join(DEST, str(year))):
-                for name in files:
-                    hasSummary = 0
-                    if fnmatch.fnmatch(name, '*.txt'):
-                        with open(os.path.join(os.path.join(DEST, str(year)), name), 'r') as fin:
-                            summary = re.match(r'^Περίληψη', fin.read(), re.DOTALL)
-                            #print summary
-                            if summary:
-                                print "Found Judgment File with summary: " + name
-                                hasSummary = 1
-                                cnt += 1
-                        if hasSummary == 1:
-                            print "Removing: " + os.path.join(os.path.join(DEST, str(year)), name)
-                            os.remove(os.path.join(os.path.join(DEST, str(year)), name))
-        print "Total Files: " + str(cnt)
-        #sys.exit()
-
-        """
-        # This is just for escaping XML invalid characters
-        # This is for files inside DEST (pdftotext) directory
-        # create a temporary file, remove old file and rename new one
-        for year in range (1997, 2018):
-            for root, dirs, files in os.walk(os.path.join(DEST, str(year))):
-                for name in files:
-                    if fnmatch.fnmatch(name, '*.txt'):
-                        print name
-                        filename = name
-                        #print os.path.join(root, filename)
-                        with open(os.path.join(os.path.join(DEST, str(year)), name), 'r') as fin:
-                            data = fin.read()
-                            #print data
-                            fout = codecs.open(os.path.join(root, name).split('.')[0] + '_tmp_.txt', 'w', 'UTF-8')
-                            fout.write(escapeXMLChars(data).decode('utf-8'))
-                            fout.close()
-
-                        os.remove(os.path.join(root, name))
-                        #print os.path.join(root, name).split('.')[0]+"_tmp_nogarb.txt"
-                        os.rename(os.path.join(root, name).split('.')[0]+"_tmp_.txt", os.path.join(root, filename))
-        """   
-    else:
-        print "No folder found! Check if folder name exists!"
-        
-
-    

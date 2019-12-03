@@ -1,15 +1,29 @@
 # -*- coding: utf-8 -*-
+#########################################################################
+##### Defines a set of variables that are used in different modules #####
+#########################################################################
 import re
 
-##################################################################################
-########## Defines a set of variables that are used in different module ##########
-#################################################################################
 
-"""
-This is a dictionary containing most of the code laws found in legal texts
-and the corresponding type of legal document that certifies them.
-Formal type is always "type_number_year"
-"""
+"""Define files extensions"""
+TXT_EXT = '.txt'
+XML_EXT = '.xml'
+PDF_EXT = '.pdf'
+
+
+"""Define custom variables"""
+STE = 'ste'
+STE_METADATA = 'ste_metadata'
+NSK = 'nsk'
+NSK_TMP = 'nsk_tmp'
+NSK_METADATA = 'nsk_metadata'
+NSK_CSTM_METADATA = 'nsk_custom_metadata'
+AREIOS_PAGOS = 'areios_pagos'
+
+
+"""This is a dictionary containing most of the code laws found in legal
+texts and the corresponding type of legal document that certifies them.
+Formal type is always type_number_year"""
 codeLaws = {
     'KWDIKAS_POLITIKWN_KAI_STRATIWTIKWN_SUNTAKSEWN' : 'act/presidentialDecree_169_2007',
     'KWDIKAS_FOROLOGIKIS_DIADIKASIAS' : 'act/law_4174_2013',
@@ -77,79 +91,10 @@ codeLaws = {
     'KWDIKAS_FOROLOGIAS_KLIRONOMIWN' : 'act/law_2961_2001',
     'KWDIKAS_FOROLOGIKIS_APEIKONISIS_SYNALLAGWN' : 'act/law_4390_2012'
     }
-'''
-codeLaws = {
-    'KwdikasForologikisDiadikasiasContext' : 'act_4174_2013',
-    'YpallilikosKwdikasContext' : 'act_3528_2007',
-    'AgrotikosKwdikasContext' : 'royalDecree_29.10_1949',
-    'AlieutikosKwdikasContext' : 'decreeLaw_420_1970',
-    'AstikosKwdikasContext' : 'compulsoryLaw_ 2783_1941',
-    'AgoranomikosKwdikasContext': 'decreeLaw_136_1946',
-    'GenikosOikodomikosKanonismosContext' : 'royalDecree_9_1955',
-    'NeosOikodomikosKanonismosContext' : 'act_4067_2012',
-    'KwdikasAdeiwnFortigwnAutokinitwnContext' : 'royalDecree_281_1973',   
-    'KwdikasApodimiasMetanasteusisDiavatiriaContext': 'presidentialDecree_417_1993',    
-    'KwdikasDeontologiasDikigorikouLeitourgimatosContext' : 'lawSocietyAthens_04.01_1980',
-    'KwdikasDiatagmatwnGiaDimotlogiaContext' : 'presidentialDecree_497_1991',
-    'KwdikasDiataksewnStratologikisFisisContext' : 'presidentialDecree_292_2003',
-    'KwdikasEllinikisIthageneiasContext' : 'act_3284_2004',
-    'KwdikasEsodwnDimwnKaiKoinotitwnContext' : 'royalDecree_24_1958',
-    'DasikosKwdikasContext' : 'decreeLaw_86_1969',
-    'KwdikasAeroporikouDikaiouContext' : 'act_1815_1988',
-    'KwdikasKataskeuisDimosiwnErgwnContext' : 'act_3669_2008',
-    'KwdikasNomothesiasKuvernisisContext' : 'presidentialDecree_63_2005',
-    'KwdikasNomwnGiaNarkwtikaContext' : 'act_3459_2006',
-    'KwdikasParoxisEpenditikwnKinitrwnContext' : 'presidentialDecree_456_1995',
-    'KwdikasPeriArxaiotitwnContext' : 'presidentialDecree_9_1932',
-    'KwdikasSynallagwnHlektrikisEnergeiasContext' : 'ministerialDecision_D5/HL/B/F1/8988_2001',
-    'KwdikasTameiouNomikwnContext' : 'decreeLaw_4114_1960',
-    'KwdikasTrofimwnKaiPotwnContext' : 'GeneralChemicalStateLaboratory_1100_1987',
-    'KwdikasForologiasKapnouContext' : 'royalDecree_13_1920',
-    'KwdikasForologikwnStoixeiwnContext' : 'presidentialDecree_99_1977',
-    'KwdikasAnagkApalSeonContext' : 'act_2882_2001',
-    'KwdikasBibliwnKaiStoixeiwnContext' : 'presidentialDecree_186_1992',
-    'KwdikasPoinikisDikonomiasContext' : 'presidentialDecree_258_1986',
-    'PoinikosKwdikasContext' : 'presidentialDecree_283_1985',
-    'EthnikosTelwniakosKwdikasContext' : 'act_2960_2001',
-    'KwdikasForologiasEisodimatosContext' : 'act_4172_2013',
-    'KwdikasBasikisPoleodomNomothesiasContext' : 'presidentialDecree_14_1999',
-    'KtinotrofikosKwdikasContext' : 'decreeLaw_203_1969',
-    'KwdikasTelwnXartosimouContext' : 'decreeLaw_4755_1930',
-    'KwdikasBasikwnKanonwnKratoumenwnContext' : 'act_1851_1989',
-    'KwdikasForologikisDikonomiasContext' : 'presidentialDecree_331_1985',
-    'KwdikasDikigorwnContext' : 'act_4194_2013',
-    'KwdikasDimosiouLogistikouContrext' : 'act_2362_1995',
-    'KwdikasDhmosiouNautikouDikaiouContext' : 'decreeLaw_187_1973',
-    'KwdikasForouProstithemenisAksiasContext' : 'act_2859_2000',
-    'KwdikasPolitikisDikonomiasContext' : 'presidentialDecree_503_1985',
-    'KwdikasDhmwnKaiKoinotitwnContext' : 'act_3463_2006',
-    'KwdikasOdikisKykloforiasContext' : 'act_2696_1999',
-    'KwdikasDikastikouSwmatosEnoplwnDinamewnContext' :  'act_2304_1995',
-    'KwdikasDikastikwnEpimelitwnContext' : 'act_2318_1995',
-    'KwdikasOrganismouDikastiriwnContext' : 'act_1756_1988',
-    'KwdikasDikastikwnYpallhlwnContext' : 'act_2812_2000',  
-    'KwdikasDikwnDimosiouContext' : 'royalDecree_26.6_1944',
-    'KwdikasDioikitikisDiadikasiasContext' : 'act_2690_1999',
-    'KwdikasDioikitikisDikonomiasContext' : 'act_2717_1999',
-    'KwdikasEispraksewnDhmosiwnEsodwnContext' : 'decreeLaw_356_1974',
-    'KwdikasFarmakeutikisDeontologiasContext' : 'presidentialDecree_340_1993',
-    'KwdikasIdiwtikouNautikouDikaiouContext' : 'act_3816_1958',
-    'KwdikasPolemikwnSyntaksewnContext' : 'presidentialDecree_168_2007',
-    'KwdikasMetoxikouTameiouPolitikwnYpallhlwnContext' : 'presidentialDecree_422_1981',
-    'KwdikasMetoxikouTameiouStratouContext' : 'decreeLaw_24_1927',
-    'KwdikasProsopikouLimenikouSwmatosContext' : 'act_3079_2002',
-    'KwdikasSymvoleografwnContext' : 'act_2830_2000',   
-    'KwdikasSyntaksewnProsopikouOseContext' : 'presidentialDecree_167_2000',
-    'KwdikasAnotatouEidikouDikastiriouContext' : 'act_345_1976',
-    'KwdikasForologiasKlironomiwnContext' : 'act_2961_2001',
-    'kwdikasForologikisApeikonisisSynallagwnContext' : 'act_4390_2012'
-    }
-'''
 
-"""
-A dictionary containing all context nodes of courts based on grammar and it is used
-to create the court part of a judgment reference
-"""
+
+"""A dictionary containing all context nodes of courts based on grammar.
+it is used to create the court part of a judgment reference"""
 courts = {
     'STE' : 'COS',
     'SUPREME_COURT' : 'SCCC',
@@ -432,294 +377,10 @@ courts = {
     'DISTRICT_COURT_OF_THIVA' : 'DistrictCourtThiva',
     'DISTRICT_COURT_OF_CHALKIDA' : 'DistrictCourtChalkida',
     }
-'''
-courts = {
-    'SteContext' : 'COS',
-    'SupremeCourtContext' : 'SCCC',
-    'SuperiorSpecialCourtContext' : 'SuperiorSpecialCourt',
-    'MagistrateCourtThessalonikiContext' : 'MagistrateCourtThessaloniki',
-    'MagistrateCourtLamiaContext' : 'MagistrateCourtLamia',
-    'MagistrateCourtPiraeusContext' : 'MagistrateCourtPiraeus',
-    'MagistrateCourtAthensContext' : 'MagistrateCourtAthens',
-    'AppelateCourtAthensContext' : 'AppelateCourtAthens',
-    'AppelateCourtLamiaContext': 'AppelateCourtLamia',
-    'AppelateCourtPiraeusContext' : 'AppelateCourtPiraeus',
-    'AppelateCourtThessalonikiContext' : 'AppelateCourtThessaloniki',
-    'AppelateCourtCorfuContext' : 'AppelateCourtCorfu',    
-    'AppelateCourtThrakiContext' : 'AppelateCourtThraki',
-    'AppelateCourtIoanninaContext' : 'AppelateCourtIoannina',
-    'AppelateCourtDodekanisaContext' : 'AppelateCourtDodekanisa',
-    'AppelateCourtAegeanContext' : 'AppelateCourtAegean',
-    'AppelateCourtCreteContext' : 'AppelateCourtCrete',
-    'AppelateCourtWestMacedoniaContext' : 'AppelateCourtWestMacedonia',
-    'AppelateCourtLarisaContext' : 'AppelateCourtLarisa',
-    'AppelateCourtNafplioContext' : 'AppelateCourtNafplio',
-    'AppelateCourtPatrasContext' : 'AppelateCourtPatras',
-    'AppelateCourtWestStereasContext' : 'AppelateCourtWestStereas',
-    'AppelateCourtNorthAegeanContext' : 'AppelateCourtNorthAegean',
-    'AppelateCourtEastCreteContext' : 'AppelateCourtEastCrete',
-    'AppelateCourtKalamataContext' : 'AppelateCourtKalamata',
-    'AppelateCourtEvoiaContext' : 'AppelateCourtEvoia',    
-    'FirstInstanceCourtAthensContext' : 'FirstInstanceCourtAthens',
-    'FirstInstanceCourtLamiaContext' : 'FirstInstanceCourtLamia',
-    'FirstInstanceCourtAmfissaContext' : 'FirstInstanceCourtAmfissa',
-    'FirstInstanceCourtEvritaniaContext' : 'FirstInstanceCourtEvritania',
-    'FirstInstanceCourtLivadiaContext' : 'FirstInstanceCourtLivadia',
-    'FirstInstanceCourtPiraeusContext' : 'FirstInstanceCourtPiraeus',
-    'FirstInstanceCourtThessalonikiContext' : 'FirstInstanceCourtThessaloniki',
-    'FirstInstanceCourtVeroiaContext' : 'FirstInstanceCourtVeroia',
-    'FirstInstanceCourtEdessaContext' : 'FirstInstanceCourtEdessa',
-    'FirstInstanceCourtKateriniContext' : 'FirstInstanceCourtKaterini',
-    'FirstInstanceCourtKilkisContext' : 'FirstInstanceCourtKilkis',
-    'FirstInstanceCourtSerresContext' : 'FirstInstanceCourtSerres',
-    'FirstInstanceCourtXalkidikiContext' : 'FirstInstanceCourtXalkidiki',
-    'FirstInstanceCourtCorfuContext' : 'FirstInstanceCourtCorfu',
-    'FirstInstanceCourtGiannitsaContext' : 'FirstInstanceCourtGiannitsa',
-    'FirstInstanceCourtThesprwtiaContext' : 'FirstInstanceCourtThesprwtia',    
-    'FirstInstanceCourtRodopiContext' : 'FirstInstanceCourtRodopi',
-    'FirstInstanceCourtDramaContext' : 'FirstInstanceCourtDrama',
-    'FirstInstanceCourtEvrosContext' : 'FirstInstanceCourtEvros',
-    'FirstInstanceCourtKavalaContext' : 'FirstInstanceCourtKavala',
-    'FirstInstanceCourtXanthiContext' : 'FirstInstanceCourtXanthi',
-    'FirstInstanceCourtOrestiadaContext' : 'FirstInstanceCourtOrestiada',
-    'FirstInstanceCourtIoanninaContext' : 'FirstInstanceCourtIoannina',
-    'FirstInstanceCourtArtaContext' : 'FirstInstanceCourtArta',
-    'FirstInstanceCourtPrevezaContext' : 'FirstInstanceCourtPreveza',
-    'FirstInstanceCourtRodosContext' : 'FirstInstanceCourtRodos',
-    'FirstInstanceCourtKosContext' : 'FirstInstanceCourtKos',
-    'FirstInstanceCourtSyrosContext' : 'FirstInstanceCourtSyros',
-    'FirstInstanceCourtSamosContext' : 'FirstInstanceCourtSamos',
-    'FirstInstanceCourtNaxosContext' : 'FirstInstanceCourtNaxos',
-    'FirstInstanceCourtChaniaContext' : 'FirstInstanceCourtChania',
-    'FirstInstanceCourtRethymnoContext' : 'FirstInstanceCourtRethymno',
-    'FirstInstanceCourtKozaniContext' : 'FirstInstanceCourtKozani',
-    'FirstInstanceCourtGrevenaContext' : 'FirstInstanceCourtGrevena',
-    'FirstInstanceCourtKastoriaContext' : 'FirstInstanceCourtKastoria',
-    'FirstInstanceCourtFlorinaContext' : 'FirstInstanceCourtFlorina',
-    'FirstInstanceCourtLarisaContext': 'FirstInstanceCourtLarisa',
-    'FirstInstanceCourtVolosContext' : 'FirstInstanceCourtVolos',
-    'FirstInstanceCourtKarditsaContext' : 'FirstInstanceCourtKarditsa',
-    'FirstInstanceCourtTrikalaContext' : 'FirstInstanceCourtTrikala',
-    'FirstInstanceCourtNafplioContext' : 'FirstInstanceCourtNafplio',
-    'FirstInstanceCourtCorinthContext' : 'FirstInstanceCourtCorinth',
-    'FirstInstanceCourtSpartiContext' : 'FirstInstanceCourtSparti',
-    'FirstInstanceCourtTripoliContext' : 'FirstInstanceCourtTripoli',
-    'FirstInstanceCourtKalamataContext' : 'FirstInstanceCourtKalamata',
-    'FirstInstanceCourtKiparissiaContext' : 'FirstInstanceCourtKiparissia',
-    'FirstInstanceCourtGytheioContext' : 'FirstInstanceCourtGytheio',
-    'FirstInstanceCourtPatrasContext' : 'FirstInstanceCourtPatras',
-    'FirstInstanceCourtAigioContext' : 'FirstInstanceCourtAigio',
-    'FirstInstanceCourtKalavritaContext' : 'FirstInstanceCourtKalavrita',
-    'FirstInstanceCourtHleiasContext' : 'FirstInstanceCourtHleias',
-    'FirstInstanceCourtAmaliadaContext' : 'FirstInstanceCourtAmaliada',
-    'FirstInstanceCourtZakinthosContext' : 'FirstInstanceCourtZakinthos',
-    'FirstInstanceCourtKefalloniaContext' : 'FirstInstanceCourtKefallonia',
-    'FirstInstanceCourtAgrinioContext' : 'FirstInstanceCourtAgrinio',
-    'FirstInstanceCourtLefkadaContext' : 'FirstInstanceCourtLefkada',
-    'FirstInstanceCourtMesologgiContext' : 'FirstInstanceCourtMesologgi',
-    'FirstInstanceCourtMitiliniContext' : 'FirstInstanceCourtMitilini',
-    'FirstInstanceCourtChiosContext' : 'FirstInstanceCourtChios',
-    'FirstInstanceCourtHrakleioContext' : 'FirstInstanceCourtHrakleio',
-    'FirstInstanceCourtLasithiContext' : 'FirstInstanceCourtLasithi',
-    'FirstInstanceCourtThivaContext' : 'FirstInstanceCourtThiva',
-    'FirstInstanceCourtChalkidaContext' : 'FirstInstanceCourtChalkida',
-    'CountyCourtAthensContext' : 'CountyCourtAthens',
-    'CountyCourtMaroussiContext' : 'CountyCourtMaroussi',
-    'CountyCourtAxarnonContext' : 'CountyCourtAxarnon',
-    'CountyCourtElefsinaContext' : 'CountyCourtElefsina',
-    'CountyCourtKallitheaContext' : 'CountyCourtKallithea',
-    'CountyCourtKropiaContext' : 'CountyCourtKropia',
-    'CountyCourtLavrioContext' : 'CountyCourtLavrio',
-    'CountyCourtNeasIoniasContext' : 'CountyCourtNeasIonias',
-    'CountyCourtNeaLiosiaContext' : 'CountyCourtNeaLiosia',
-    'CountyCourtMarathonaContext' : 'CountyCourtMarathona',
-    'CountyCourtMegaraContext' : 'CountyCourtMegara',
-    'CountyCourtPeristeriContext' : 'CountyCourtPeristeri',
-    'CountyCourtChalandriContext' : 'CountyCourtChalandri',
-    'CountyCourtLamiaContext' : 'CountyCourtLamia',    
-    'CountyCourtAtalantiContext' : 'CountyCourtAtalanti',
-    'CountyCourtAmfissaContext' : 'CountyCourtAmfissa',
-    'CountyCourtEvritaniaContext' : 'CountyCourtEvritania',
-    'CountyCourtLivadiaContext' : 'CountyCourtLivadia',
-    'CountyCourtAiginaContext' : 'CountyCourtAigina',
-    'CountyCourtKalavriaContext' : 'CountyCourtKalavria',   
-    'CountyCourtKithiraContext' : 'CountyCourtKithira',
-    'CountyCourtNikaiasContext' : 'CountyCourtNikaias',
-    'CountyCourtSalaminaContext' : 'CountyCourtSalamina',
-    'CountyCourtSpetsesContext' : 'CountyCourtSpetses',
-    'CountyCourtThessalonikiContext' : 'CountyCourtThessaloniki',
-    'CountyCourtPiraeusContext' : 'CountyCourtPiraeus',
-    'CountyCourtVasilikonContext' : 'CountyCourtVasilikon',
-    'CountyCourtKoufalionContext' : 'CountyCourtKoufalion',
-    'CountyCourtLagkadaContext' : 'CountyCourtLagkada',
-    'CountyCourtAlexandriaContext' : 'CountyCourtAlexandria',
-    'CountyCourtNaousaContext' : 'CountyCourtNaousa',
-    'CountyCourtEdessaContext' : 'CountyCourtEdessa',
-    'CountyCourtAlmopiaContext' : 'CountyCourtAlmopia',
-    'CountyCourtSkydraContext' : 'CountyCourtSkydra',
-    'CountyCourtPieriaContext' : 'CountyCourtPieria',
-    'CountyCourtKolindrouContext' : 'CountyCourtKolindrou',
-    'CountyCourtPolikastroContext' : 'CountyCourtPolikastro',
-    'CountyCourtSerresContext' : 'CountyCourtSerres',
-    'CountyCourtNigritaContext' : 'CountyCourtNigrita',
-    'CountyCourtRodolivonContext' : 'CountyCourtRodolivon',
-    'CountyCourtSintikisContext' : 'CountyCourtSintikis',
-    'CountyCourtPoligirouContext' : 'CountyCourtPoligirou',
-    'CountyCourtArnaiaContext' : 'CountyCourtArnaia',
-    'CountyCourtKassandraContext' : 'CountyCourtKassandra',
-    'CountyCourtNeaMoudaniaContext' : 'CountyCourtNeaMoudania',
-    'CountyCourtCorfuContext' : 'CountyCourtCorfu',
-    'CountyCourtIgoumenitsaContext' : 'CountyCourtIgoumenitsa',
-    'CountyCourtKomotiniContext' : 'CountyCourtKomotini',
-    'CountyCourtDramaContext' : 'CountyCourtDrama',
-    'CountyCourtThasosContext' : 'CountyCourtThasos',
-    'CountyCourtPaggaiouContext' : 'CountyCourtPaggaiou',
-    'CountyCourtOrestiadaContext' : 'CountyCourtOrestiada',
-    'CountyCourtAlexandroupoliContext' : 'CountyCourtAlexandroupoli',
-    'CountyCourtKavalaContext' : 'CountyCourtKavala',
-    'CountyCourtDidimoteixoContext' : 'CountyCourtDidimoteixo',
-    'CountyCourtIoanninaContext' : 'CountyCourtIoannina',
-    'CountyCourtKonitsaContext' : 'CountyCourtKonitsa',
-    'CountyCourtArtaContext' : 'CountyCourtArta',
-    'CountyCourtPrevezaContext' : 'CountyCourtPreveza',
-    'CountyCourtRodosContext' : 'CountyCourtRodos',
-    'CountyCourtKarpathosContext' : 'CountyCourtKarpathos',
-    'CountyCourtKalimnosContext' : 'CountyCourtKalimnos',
-    'CountyCourtKosContext' : 'CountyCourtKos',
-    'CountyCourtLerosContext' : 'CountyCourtLeros',
-    'CountyCourtAndrosContext' : 'CountyCourtAndros',
-    'CountyCourtErmoupoliContext' : 'CountyCourtErmoupoli',
-    'CountyCourtMilosContext' : 'CountyCourtMilos',
-    'CountyCourtMykonosContext' : 'CountyCourtMykonos',
-    'CountyCourtParosContext' : 'CountyCourtParos',
-    'CountyCourtTinosContext' : 'CountyCourtTinos',
-    'CountyCourtSamosContext' : 'CountyCourtSamos',
-    'CountyCourtIkariaContext' : 'CountyCourtIkaria',
-    'CountyCourtKarlovasiContext' : 'CountyCourtKarlovasi',
-    'CountyCourtNaxosContext' : 'CountyCourtNaxos',
-    'CountyCourtChaniaContext' : 'CountyCourtChania',
-    'CountyCourtVamosContext' : 'CountyCourtVamos',
-    'CountyCourtRethymnoContext' : 'CountyCourtRethymno',
-    'CountyCourtKozaniContext' : 'CountyCourtKozani',   
-    'CountyCourtEordaiaContext' : 'CountyCourtEordaia',
-    'CountyCourtGrevenaContext' : 'CountyCourtGrevena',
-    'CountyCourtKastoriaContext' : 'CountyCourtKastoria',
-    'CountyCourtFlorinaContext' : 'CountyCourtFlorina',
-    'CountyCourtAmuntaioContext' : 'CountyCourtAmuntaio',
-    'CountyCourtLarisaContext' : 'CountyCourtLarisa',
-    'CountyCourtElassonaContext' : 'CountyCourtElassona',
-    'CountyCourtFarsalaContext' : 'CountyCourtFarsala',
-    'CountyCourtVolosContext' : 'CountyCourtVolos',
-    'CountyCourtAlmirosContext' : 'CountyCourtAlmiros',
-    'CountyCourtSkopelosContext' : 'CountyCourtSkopelos',
-    'CountyCourtKarditsaContext' : 'CountyCourtKarditsa',
-    'CountyCourtTrikalaContext' : 'CountyCourtTrikala',
-    'CountyCourtKalampakaContext' : 'CountyCourtKalampaka',
-    'CountyCourtNafplioContext' : 'CountyCourtNafplio',
-    'CountyCourtAstrosContext' : 'CountyCourtAstros',
-    'CountyCourtArgosContext' : 'CountyCourtArgos',
-    'CountyCourtMassitosContext' : 'CountyCourtMassitos',
-    'CountyCourtThiraContext' : 'CountyCourtThira',
-    'CountyCourtCorinthContext' : 'CountyCourtCorinth',
-    'CountyCourtSikionosContext' : 'CountyCourtSikionos',
-    'CountyCourtNemeaContext' : 'CountyCourtNemea',
-    'CountyCourtXylokastroContext' : 'CountyCourtXylokastro',
-    'CountyCourtEpidavrosLimirasContext' : 'CountyCourtEpidavrosLimiras',
-    'CountyCourtTripoliContext' : 'CountyCourtTripoli',
-    'CountyCourtMegalopoliContext' : 'CountyCourtMegalopoli',
-    'CountyCourtPsofidaContext' : 'CountyCourtPsofida',
-    'CountyCourtKalamataContext' : 'CountyCourtKalamata',
-    'CountyCourtPilosContext' : 'CountyCourtPilos',
-    'CountyCourtKiparissiaContext' : 'CountyCourtKiparissia',
-    'CountyCourtPlatamodaContext' : 'CountyCourtPlatamoda',
-    'CountyCourtGytheioContext' : 'CountyCourtGytheio',
-    'CountyCourtNeapoliVoiwnContext' : 'CountyCourtNeapoliVoiwn',
-    'CountyCourtPatrasContext' : 'CountyCourtPatras',
-    'CountyCourtDimiContext' : 'CountyCourtDimi',
-    'CountyCourtAigialiaContext' : 'CountyCourtAigialia',
-    'CountyCourtKalavritaContext' : 'CountyCourtKalavrita',
-    'CountyCourtAkrataContext' : 'CountyCourtAkrata',
-    'CountyCourtPirgosContext' : 'CountyCourtPirgos',
-    'CountyCourtOlympiaContext' : 'CountyCourtOlympia',
-    'CountyCourtAriniContext' : 'CountyCourtArini',
-    'CountyCourtAmaliadaContext' : 'CountyCourtAmaliada',
-    'CountyCourtGastouniContext' : 'CountyCourtGastouni',
-    'CountyCourtMyrtountionContext' : 'CountyCourtMyrtountion',
-    'CountyCourtZakinthosContext' : 'CountyCourtZakinthos',
-    'CountyCourtArgostoliContext' : 'CountyCourtArgostoli',
-    'CountyCourtSameonContext' : 'CountyCourtSameon',
-    'CountyCourtAgrinioContext' : 'CountyCourtAgrinio',
-    'CountyCourtValtosContext' : 'CountyCourtValtos',
-    'CountyCourtLefkadaContext' : 'CountyCourtLefkada',
-    'CountyCourtVonitsaContext' : 'CountyCourtVonitsa',
-    'CountyCourtMesologgiContext' : 'CountyCourtMesologgi',
-    'CountyCourtNafpaktosContext' : 'CountyCourtNafpaktos',
-    'CountyCourtMitiliniContext' : 'CountyCourtMitilini',
-    'CountyCourtKalloniContext' : 'CountyCourtKalloni',
-    'CountyCourtChiosContext' : 'CountyCourtChios',
-    'CountyCourtHrakleioContext' : 'CountyCourtHrakleio',
-    'CountyCourtKasteliContext' : 'CountyCourtKasteli',
-    'CountyCourtLasithiContext' : 'CountyCourtLasithi',
-    'CountyCourtIerapetraContext' : 'CountyCourtIerapetra',
-    'CountyCourtSiteiaContext' : 'CountyCourtSiteia',
-    'CountyCourtThivaContext' : 'CountyCourtThiva',
-    'CountyCourtChalkidaContext' : 'CountyCourtChalkida',
-    'CountyCourtIstiaiaContext' : 'CountyCourtIstiaia',
-    'CountyCourtKarystosContext' : 'CountyCourtKarystos',
-    'CountyCourtKimiContext' : 'CountyCourtKimi',
-    'CountyCourtTamineonContext' : 'CountyCourtTamineon',
-    'DistrictCourtAthensContext' : 'DistrictCourtAthens',
-    'DistrictCourtLamiaContext' : 'DistrictCourtLamia',
-    'DistrictCourtLivadiaContext' : 'DistrictCourtLivadia',
-    'DistrictCourtPiraeusContext' : 'DistrictCourtPiraeus',
-    'DistrictCourtThessalonikiContext' : 'DistrictCourtThessaloniki',
-    'DistrictCourtVeroiaContext' : 'DistrictCourtVeroia',
-    'DistrictCourtPieriaContext' : 'DistrictCourtPieria',
-    'DistrictCourtSerresContext' : 'DistrictCourtSerres',
-    'DistrictCourtCorfuContext' : 'DistrictCourtCorfu',
-    'DistrictCourtKomotiniContext' : 'DistrictCourtKomotini',
-    'DistrictCourtDramaContext' : 'DistrictCourtDrama',
-    'DistrictCourtKavalaContext' : 'DistrictCourtKavala',
-    'DistrictCourtArtaContext' : 'DistrictCourtArta',
-    'DistrictCourtRodosContext' : 'DistrictCourtRodos',
-    'DistrictCourtChaniaContext' : 'DistrictCourtChania',
-    'DistrictCourtRethymnoContext' : 'DistrictCourtRethymno',
-    'DistrictCourtKozaniContext' : 'DistrictCourtKozani',
-    'DistrictCourtKleisouraContext' : 'DistrictCourtKleisoura',
-    'DistrictCourtLarisaContext' : 'DistrictCourtLarisa',
-    'DistrictCourtElassonaContext' : 'DistrictCourtElassona',
-    'DistrictCourtVolosContext' : 'DistrictCourtVolos',
-    'DistrictCourtKarditsaContext' : 'DistrictCourtKarditsa',
-    'DistrictCourtTrikalaContext' : 'DistrictCourtTrikala',
-    'DistrictCourtNafplioContext' : 'DistrictCourtNafplio',
-    'DistrictCourtArgosContext' : 'DistrictCourtArgos',
-    'DistrictCourtCorinthContext' : 'DistrictCourtCorinth',
-    'DistrictCourtSikionosContext' : 'DistrictCourtSikionos',
-    'DistrictCourtSpartiContext' : 'DistrictCourtSparti',
-    'DistrictCourtTripoliContext' : 'DistrictCourtTripoli',
-    'DistrictCourtKalamataContext' : 'DistrictCourtKalamata',
-    'DistrictCourtPatrasContext' : 'DistrictCourtPatras',
-    'DistrictCourtAigialiaContext' : 'DistrictCourtAigialia',
-    'DistrictCourtPirgosContext' : 'DistrictCourtPirgos',
-    'DistrictCourtAmaliadaContext' : 'DistrictCourtAmaliada',
-    'DistrictCourtAgrinioContext' : 'DistrictCourtAgrinio',
-    'DistrictCourtValtosContext' : 'DistrictCourtValtos',
-    'DistrictCourtMesologgiContext' : 'DistrictCourtMesologgi',
-    'DistrictCourtMitiliniContext' : 'DistrictCourtMitilini',
-    'DistrictCourtLimnosContext' : 'DistrictCourtLimnos',
-    'DistrictCourtPlomariContext' : 'DistrictCourtPlomari',
-    'DistrictCourtHrakleioContext' : 'DistrictCourtHrakleio',
-    'DistrictCourtMoiresContext' : 'DistrictCourtMoires',
-    'DistrictCourtPirgosCreteContext' : 'DistrictCourtPirgosCrete',
-    'DistrictCourtThivaContext' : 'DistrictCourtThiva',
-    'DistrictCourtChalkidaContext' : 'DistrictCourtChalkida',
-    }
-'''
 
-'''
-Converts any greek character to the corresponding Latin according to your keyboard!
-This is used only to modify file names due to brat's inability to manage Greek characters
-'''
+
+"""A dictionary used to convert any greek character to the corresponding
+latin according to qwerty keyboard."""
 grToLat = {
     'Α':'A', 'α':'a', 'ά':'a', 'Β':'B', 'β':'b',
     'Γ':'G', 'γ':'g', 'Δ':'D', 'δ':'d', 'Ε':'E',
@@ -735,9 +396,9 @@ grToLat = {
     'Ω':'V'
     }
 
-'''
-Converts any greek character to the corresponding Latin (minor changes)
-'''
+
+"""A dictionary used to convert any greek character to the corresponding
+latin one with minor changes"""
 grToLat_v2 = {
     'Α':'A', 'α':'a', 'ά':'a', 'Β':'B', 'β':'b',
     'Γ':'G', 'γ':'g', 'Δ':'D', 'δ':'d', 'Ε':'E',
@@ -754,11 +415,9 @@ grToLat_v2 = {
     }
 
 
-"""
-In case of elements indexing, legislators use numbers or combination of numbers and
-letters e.g. First, second, 32A etc. This dictionary is used to convert any style to the
-appropriate number according to Akoma Ntoso naming convention.
-"""
+"""A dictionary to convert any style of element indexing to the appropriate
+number according to Akoma Ntoso naming convention (used when authors provide
+combinationf of numbers and letters or words for element indexing)"""
 numberingSystem = {
     'α' : '1', 'Α' : '1', 'β' : '2', 'Β' : '2', 'γ' : '3', 'Γ' : '3', 'Α':'1',
     'δ' : '4', 'Δ' : '4', 'ε' : '5', 'Ε' : '5', 'στ' : '6', 'ΣΤ' : '6',
@@ -777,10 +436,7 @@ numberingSystem = {
     }
 
 
-'''
-Roles that can be found in legal judgments. They are used to create TLRole
-subelements in 'references' node of AkomaNtoso metadata tag
-'''
+"""Roles that can be found in legal judgments"""
 roles = {
     'Αντιπροέδρους': 'deputy.president',
     'Αντιπρόεδρο': 'deputy.president',
@@ -840,11 +496,7 @@ roles = {
     }
 
 
-'''
-Months to be found in legal texts. This dictionary converts a month phrase to the
-corresponding number and it is used to crate the date attribute of many Akoma Ntoso
-elements
-'''
+"""A dictionary that converts a month phrase to the corresponding number"""
 months = {
     'Ιανουαρίου' : 1,
     'Iανουαρίου' : 1,   #English character 'I'
@@ -869,10 +521,8 @@ months = {
     }
 
 
-'''
-This dictionary is used only to create 'ShowAs' attribute of TLCEvent element
-based on the name of the corresponding date
-'''
+"""This dictionary is used only to create 'ShowAs' attribute of
+TLCEvent element based on the name of the corresponding date"""
 importantDates = {
     'publicHearingDate': 'Ημερομηνία δημόσιας συνεδρίασης',
     'decisionPublicationDate': 'Ημερομηνία δημοσίευσης απόφασης',
@@ -882,9 +532,7 @@ importantDates = {
     }
 
 
-'''
-Rules for removing garbages for every type of legal text.
-'''
+"""Lists of rules for removing garbages for every type of legal text"""
 ClarityGarbages=[
     (r'\n\s*ΑΝΑΡΤΗΤΕ[ΑΟ]\s*ΣΤΟ\s*ΔΙΑΔΙΚΤΥΟ\n', '\n'),
     (r'(\n+\s*ΑΔΑ\s*[:]\s*[Α-Ω0-9-]*\n*)', '\n'), #ADA
@@ -1008,18 +656,17 @@ nskGarbages = [
     (r'(\n)\s*$', r'') #EOF empty next line
     ]
 
-'''
-Basic patterns for matching dates of importance string
-'''
-# Create regex object for publicHearingDate
+
+"""basic patterns for matching important dates in legal texts"""
+# publicHearingDate
 publicHearingDatePattern = r'(?P<dd>\d{1,2})(?P<numSpecialLektiko>(ας|ης|η|ής)*)(?P<keno_1>\s*[.]*)(?P<mm>Ιανουαρίου|Φεβρουαρίου|Μαρτίου|Απριλίου|Μαΐου|Μαϊου|Ιουνίου|Ιουλίου|Αυγούστου|Σεπτεμβρίου|Οκτωβρίου|Νοεμβρίου|Δεκεμβρίου|\d{1,2})(?P<keno_2>\s*[.]*)(?P<yyyy>\d{4})'
-# Create regex objext for decisionPublicationDate
+# decisionPublicationDate
 decisionPublicationDatePattern = r'(?P<string>Δημοσιεύθηκε|Εκδόθηκε|δημοσιεύθηκε|δημοσιεύτηκε|δημόσια\sσυνεδρίαση)(?P<garbage>.*?)(?P<dd>\d{1,2})(?P<numSpecialLektiko>(ας|ης|η|ής)*)(?P<keno_1>\s*[.]*)(?P<mm>Ιανουαρίου|Φεβρουαρίου|Μαρτίου|Απριλίου|Μαΐου|Μαϊου|Ιουνίου|Ιουλίου|Αυγούστου|Σεπτεμβρίου|Οκτωβρίου|Νοεμβρίου|Δεκεμβρίου|\d{1,2})(?P<keno_2>\s*[.]*)(?P<yyyy>\d{4})'
-# Create regex objext for courtConferenceDate
+# courtConferenceDate
 courtConferenceDatePattern = r'(?P<string>αποφασίστηκε|αποφασίσθηκε|διάσκεψη\s*έγινε)(?P<garbage>.*?)(?P<dd>\d{1,2})(?P<numSpecialLektiko>(ας|ης|η|ής)*)(?P<keno_1>\s*[.]*)(?P<mm>Ιανουαρίου|Φεβρουαρίου|Μαρτίου|Απριλίου|Μαΐου|Μαϊου|Ιουνίου|Ιουλίου|Αυγούστου|Σεπτεμβρίου|Οκτωβρίου|Νοεμβρίου|Δεκεμβρίου|\d{1,2})(?P<keno_2>\s*[.]*)(?P<yyyy>\d{4})'
-# Create regex objext for councilConferenceDate
+# councilConferenceDate
 councilConferenceDatePattern = r'(?P<string>Συνεδρίαση)(?P<garbage>.*?)(?P<dd>\d{1,2})(?P<numSpecialLektiko>(ας|ης|η|ής)*)(?P<keno_1>\s*[.]*\s*)(?P<mm>[ΙI]ανουαρίου|Φεβρουαρίου|Μαρτίου|Απριλίου|Μαΐου|Μαϊου|[IΙ]ουνίου|Ιουλίου|Αυγούστου|Σεπτεμβρίου|Οκτωβρίου|Νοεμβρίου|Δεκεμβρίου|\d{1,2})(?P<keno_2>\s*[.]*\s*)(?P<yyyy>\d{4})'
-# Create regex objext for opinionSignatureDate
+# opinionSignatureDate
 opinionSignatureDatePattern = r'(?P<string>Θεωρήθηκε\s*|Αθήνα[,]?\s*)(?P<garbage>.*?)(?P<dd>\d{1,2})(?P<numSpecialLektiko>(ας|ης|η|ής)*)(?P<keno_1>\s*[.]*[-]*\s*)(?P<mm>Ιανουαρίου|Φεβρουαρίου|Μαρτίου|Απριλίου|Μαΐου|Μαϊου|Ιουνίου|Ιουλίου|Αυγούστου|Σεπτεμβρίου|Οκτωβρίου|Νοεμβρίου|Δεκεμβρίου|\d{1,2})(?P<keno_2>\s*[.]*[-]*\s*)(?P<yyyy>\d{4})'
-# Create regex objext for fix XML string
+# paragraph pattern
 paragraphPattern = r'([<][/]p[>][<]p[>])'
