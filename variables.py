@@ -22,7 +22,10 @@ AREIOS_PAGOS = 'areios_pagos'
 LEGAL_CRAWLERS = 'legal_crawlers'
 DATA = 'data'
 LEGAL_TEXTS = 'legal_texts'
-
+LOGS = 'logs'
+XML = 'XML'
+XML_NO_NER = 'XML_NO_NER'
+NER = 'NER'
 
 """This is a dictionary containing most of the code laws found in legal
 texts and the corresponding type of legal document that certifies them.

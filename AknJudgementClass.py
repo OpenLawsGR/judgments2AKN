@@ -21,7 +21,7 @@ from grammars.gen.LegalOpinionListener import LegalOpinionListener
 
 
 # get Logger
-#Akn_LOGGER = logging.getLogger('Akn_LOGGER')
+Akn_LOGGER = logging.getLogger('Akn_LOGGER')
 
 global href_base
 href_base = "/akn/gr/"
@@ -61,7 +61,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             rapporteur: the rapporteur of the advisory opinion
         """
         
-        #Akn_LOGGER.info("initialiazing AknJudgmentXmlListener Object...")
+        Akn_LOGGER.info("initialiazing AknJudgmentXmlListener Object...")
         global division_eId
         global division_para_eId
         self.text = ""
@@ -90,21 +90,21 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
         self.chairman = chairman
         self.rapporteur = rapporteur
         self.creator = "#openLawsGR"
-        #Akn_LOGGER.debug("textType: %s", self.textType)
-        #Akn_LOGGER.debug("author: %s", self.author)
-        #Akn_LOGGER.debug("foreas: %s", self.foreas)
-        #Akn_LOGGER.debug("issueYear: %s", self.issueYear)
-        #Akn_LOGGER.debug("decisionNumber: %s", self.decisionNumber)
-        #Akn_LOGGER.debug("ECLI: %s", self.ECLI)
-        #Akn_LOGGER.debug("publicationDate: %s", self.publicationDate)
-        #Akn_LOGGER.debug("ada: %s", self.ada)
-        #Akn_LOGGER.debug("status: %s", self.status)
-        #Akn_LOGGER.debug("summary: %s", self.summary)
-        #if self.keywords:
-        #    for keyword in self.keywords:
-        #        Akn_LOGGER.debug("keyword: %s", keyword)
-        #Akn_LOGGER.debug("chairman: %s", self.chairman)
-        #Akn_LOGGER.debug("rapporteur: %s", self.rapporteur)
+        Akn_LOGGER.debug("textType: %s", self.textType)
+        Akn_LOGGER.debug("author: %s", self.author)
+        Akn_LOGGER.debug("foreas: %s", self.foreas)
+        Akn_LOGGER.debug("issueYear: %s", self.issueYear)
+        Akn_LOGGER.debug("decisionNumber: %s", self.decisionNumber)
+        Akn_LOGGER.debug("ECLI: %s", self.ECLI)
+        Akn_LOGGER.debug("publicationDate: %s", self.publicationDate)
+        Akn_LOGGER.debug("ada: %s", self.ada)
+        Akn_LOGGER.debug("status: %s", self.status)
+        Akn_LOGGER.debug("summary: %s", self.summary)
+        if self.keywords:
+            for keyword in self.keywords:
+                Akn_LOGGER.debug("keyword: %s", keyword)
+        Akn_LOGGER.debug("chairman: %s", self.chairman)
+        Akn_LOGGER.debug("rapporteur: %s", self.rapporteur)
 
         
     def createAkomaNtosoRoot(self):
@@ -117,7 +117,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml element 
         """
         #print("Creating AkomaNtoso Element...")
-        #Akn_LOGGER.info("Creating AkomaNtoso Element...")
+        Akn_LOGGER.info("Creating AkomaNtoso Element...")
         akomaNtoso = etree.Element("akomaNtoso", nsmap=self.nsmap)
         akomaNtoso.set(self.attrQName, self.schemaLocation)
         return akomaNtoso
@@ -133,7 +133,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<meta>> element 
         """
         #print("Creating meta Element...")
-        #Akn_LOGGER.info("Creating meta Element...")
+        Akn_LOGGER.info("Creating meta Element...")
         meta = etree.Element("meta")
         identification = self.createIdentification()
         meta.append(identification)
@@ -177,7 +177,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<identification>> element
         """
         #print("Creating identification Element...")
-        #Akn_LOGGER.info("Creating identification Element...")
+        Akn_LOGGER.info("Creating identification Element...")
         identification = etree.Element("identification", attrib={"source" : self.creator})
         FRBRWork = self.createFRBRWork()
         FRBRExpression = self.createFRBRExpression()
@@ -204,7 +204,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<FRBRWork>> element 
         """
         #print("Creating FRBRWork Element...")
-        #Akn_LOGGER.info("Creating FRBRWork Element...")
+        Akn_LOGGER.info("Creating FRBRWork Element...")
         FRBRWork = etree.Element("FRBRWork")
 
         FRBRthis = etree.SubElement(FRBRWork, "FRBRthis",
@@ -258,7 +258,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<FRBRExpression>> element 
         """
         #print("Creating FRBRExpression Element...")
-        #Akn_LOGGER.info("Creating FRBRExpression Element...")
+        Akn_LOGGER.info("Creating FRBRExpression Element...")
         FRBRExpression = etree.Element("FRBRExpression")
 
         FRBRthis = etree.SubElement(FRBRExpression, "FRBRthis",
@@ -305,7 +305,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<FRBRManifestation>> element 
         """
         #print("Creating FRBRManifestation Element...")
-        #Akn_LOGGER.info("Creating FRBRManifestation Element...")
+        Akn_LOGGER.info("Creating FRBRManifestation Element...")
         FRBRManifestation = etree.Element("FRBRManifestation")
 
         FRBRthis = etree.SubElement(FRBRManifestation, "FRBRthis",
@@ -353,7 +353,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<lifecycle>> element 
         """
         #print("Creating Lifecycle Element...")
-        #Akn_LOGGER.info("Creating Lifecycle Element...")
+        Akn_LOGGER.info("Creating Lifecycle Element...")
         lifecycle = etree.Element("lifecycle", attrib ={"source" : self.creator})
         eventRef = etree.SubElement(lifecycle, "eventRef",
                                     attrib={"source" : "#original",
@@ -380,7 +380,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<workflow>> element 
         """
         #print("Creating workflow Element...")
-        #Akn_LOGGER.info("Creating workflow Element...")
+        Akn_LOGGER.info("Creating workflow Element...")
         workflow = etree.Element("workflow", attrib={"source" : self.creator})
         
         #print(etree.tostring(workflow,
@@ -401,7 +401,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<references>> element 
         """
         #print("Creating references Element...")
-        #Akn_LOGGER.info("Creating references Element...")
+        Akn_LOGGER.info("Creating references Element...")
         references = etree.Element("references", attrib={"source" : self.creator})
         original = etree.SubElement(references, "original", attrib={"eId":"original",
                                                                     "href":"/akn/gr/" + self.textType + "/" +
@@ -447,7 +447,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<proprietary>> element 
         """
         #print("Creating proprietary Element...")
-        #Akn_LOGGER.info("Creating proprietary Element...")
+        Akn_LOGGER.info("Creating proprietary Element...")
         
         proprietary = etree.Element("proprietary", attrib={'source' : self.creator})
         adaElem = etree.SubElement(proprietary, '{' + self.nsmap['openlawsgr']+'}ada')
@@ -486,7 +486,7 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<publication>> element 
         """
         #print("Creating publication Element...")
-        #Akn_LOGGER.info("Creating publication Element...")
+        Akn_LOGGER.info("Creating publication Element...")
         publication = etree.Element("publication",
                                     attrib={
                                         'name' : 'Diavgeia',
@@ -516,8 +516,9 @@ class AknJudgementXML(LegalOpinionListener, CouncilOfStateListener, SupremeCourt
             lxml <<classification>> element 
         """
         #print("Creating classification Element...")
-        #Akn_LOGGER.info("Creating classification Element...")
-        classification = etree.Element("classification", attrib={'source' : self.creator})
+        Akn_LOGGER.info("Creating classification Element...")
+        classification = etree.Element("classification",
+                                       attrib={'source' : self.creator})
     
         if self.keywords:
             cnt = 0
