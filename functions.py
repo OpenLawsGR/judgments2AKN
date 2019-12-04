@@ -699,9 +699,9 @@ def findDatesOfInterest(searchNodeElem, regexObj, dateName, author):
                 return searchNodeElem, DateStep, DateTLCEvent
 
 
-def extractDataFromRequests(url, paramsData):
+def extract_data_from_nsk(url, paramsData):
     """Uses requests libary to extract data from NSK
-    based on search form
+    based on official site search form
 
     Args:
         url: The url to submit the request
@@ -718,14 +718,15 @@ def extractDataFromRequests(url, paramsData):
         if req.status_code == 200:
             page = html.fromstring(req.content.decode('utf-8'))
             dataToExtract = page.xpath('//div[@class="article_text"]/p/text()')
-            keywords_list = dataToExtract[3].strip().split(',')
-            chairman = dataToExtract[7].strip()
-            rapporteur = dataToExtract[9].strip()
-            status = dataToExtract[11].strip()
-            extractedData['keywords'] = keywords_list
-            extractedData['chairman'] = chairman
-            extractedData['rapporteur'] = rapporteur
-            extractedData['status'] = status
+            if dataToExtract:
+                keywords_list = dataToExtract[3].strip().split(',')
+                chairman = dataToExtract[7].strip()
+                rapporteur = dataToExtract[9].strip()
+                status = dataToExtract[11].strip()
+                extractedData['keywords'] = keywords_list
+                extractedData['chairman'] = chairman
+                extractedData['rapporteur'] = rapporteur
+                extractedData['status'] = status
     except requests.exceptions.HTTPError as errh:
         print ("Http Error: ", errh)
         pass

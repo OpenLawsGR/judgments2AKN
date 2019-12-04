@@ -19,6 +19,9 @@ NSK_TMP = 'nsk_tmp'
 NSK_METADATA = 'nsk_metadata'
 NSK_CSTM_METADATA = 'nsk_custom_metadata'
 AREIOS_PAGOS = 'areios_pagos'
+LEGAL_CRAWLERS = 'legal_crawlers'
+DATA = 'data'
+LEGAL_TEXTS = 'legal_texts'
 
 
 """This is a dictionary containing most of the code laws found in legal
