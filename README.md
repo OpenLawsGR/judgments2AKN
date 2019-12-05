@@ -18,7 +18,7 @@ judgments2AKN is a project for the automated collection and transformation of Gr
 ## Instructions
 
 ### Scrappers
-The scrapper for the Council of State is based on Selenium (legal_crawlers/ste_scrapper/scrapper.py). It takes as input argument the year and downloads in plain text all court decisions that can be found for this year. Files are saved in legal_crawlers/data/ste/year folder. Usage:
+The scrapper for the Council of State is based on Selenium (*legal_crawlers/ste_scrapper/scrapper.py*). It takes as input argument the year and downloads in plain text all court decisions that can be found for this year. Files are saved in *legal_crawlers/data/ste/year* folder. Usage:
 
 ```console
 user@foo:~/legal_crawlers/ste_scrapper$ python scrapper.py 2016
@@ -36,24 +36,32 @@ The crawler for the Legal Council is also based on Scrapy. Usage:
 user@foo:~/legal_crawlers$ scrapy crawl clarity -a fileType=Α.4 -a org=50024 -a from_date=2019-01-01
 ```
 
-Please notice that Α.4 for the fileType argument is writen with a greek character Α and not with a latin one. The crawler dowloads the PDF files and the metadata from the Diavgeia platform (saved in txt files).
+Please notice that Α.4 for the fileType argument is written with a greek character Α and not with a latin one. The crawler downloads Legal Opinions as PDF files and the metadata (saved in txt files) from the Diavgeia platform. More information on available parameters can be found in [Diavgeia API](https://diavgeia.gov.gr/api/help)
 
 ### Preprocessing
-Preprocessing (including conversion of PDF files for legal opinions to plain text) is done in the preprocessing.py file. The user has to change the value of the FOLDER_PATH according to the document type ('nsk' for legal opinions, 'ste' for decisions of the Council of State, 'areios_pagos' for decisions of the Supreme Civil and Criminal Court.
+Preprocessing (including conversion of PDF files for Legal Opinions to plain text) is implemented through the command line interface preprocessing.py. The user can provide year (redundant for Legal Council of State) and filename parameters in order to process specific texts. 
 
-TODO: preprocessing.py refactoring and use of arguments in order to be more user-friendly.
+usage example:
+
+```console
+user@foo:~$ python preprocessing.py ste -year=2016
+```
+
+By default post-processing texts will be stored to a base folder *legal_texts* (for the example provided path will be *legal_texts/ste/2016*). Accordingly, for the decisions of the Supreme Civil and Criminal Court "Areios Pagos" the path will be *legal_texts/areios_pagos/year* and for Legal Opinions path will be *legal_texts/nsk*. In addition, this module will automatically store metadata files (if available) in a similar way (for example, for the Council of State metadata files will be stored to *legal_texts/ste_metadata/2016*). 
 
 ### Transformation software
-Transformation is possible using the following files and providing the name of the txt file to transform:
+Transformations is possible using the following files and providing either a specific year or the name of the txt file to transform:
 - createCouncilOfStateJudgmentsAkn.py
 - createAreiosPagosJudgmentsAkn.py
 - createLegalOpinionsAkn.py
 
 ```console
-user@foo:~$ python createCouncilOfStateJudgmentsAkn.py 'A1367_2006.txt'
+user@foo:~$ python createCouncilOfStateJudgmentsAkn.py -year=2016 'A1367_2006.txt'
 ```
 
-TODO: allow user to provide full path to file instead of using default folders for storage of files.
+By default Akoma Ntoso XML files will be stored to a base folder *XML* (for the example provided path will be *XML/ste/2016*). Accordingly, for the decisions of the Supreme Civil and Criminal Court "Areios Pagos" storage path will be *XML/areios_pagos/year* and for Legal Opinions *XML/nsk*.
+
+Transformation to XML files also supports Named Entity Recognition in order to build the appropriate nodes based on Akoma Ntoso prototype. A beta version is available if NER results are provided in [GATE XML](https://gate.ac.uk/) format and are stored in similar paths, for example, for the Council of State (ste) in *NER/ste/year*.  If no Gate XML file is available the appropriate nodes will not be created.
 
 Parallelization is possible using [GNU Parallel](https://www.gnu.org/software/parallel/). In this case multiple calls of the above python commands can be included in a single file (one command per line) which is passed in GNU parallel e.g.
 
@@ -62,7 +70,13 @@ user@foo:~$ parallel < commands.txt
 ```
 
 ### Validation
-Generated XML files can be validated against the Akoma Ntoso Schema using the checkValidXML.py file. The validation is done in a folder base and the user has again to declare the folder as a value of the FOLDER_PATH variable.
+Generated XML files can be validated against the Akoma Ntoso Schema using the checkValidXML.py file. User can provide the name of the legal_authority (ste, areios_pagos, nsk) and year (optional) paramenter in order to perform validation for specific years. 
+
+Example:
+
+```console
+user@foo:~$ python checkValidXML.py ste -year=2016
+```
 
 ## License
 Software is licensed under the MIT license.
