@@ -529,7 +529,7 @@ class AknLegalReferences(Legal_refListener, Legal_refVisitor):
                 Akn_LOGGER.debug('Par_mult Arthro_id: %s', elemID)
                 #href = legislation_href + createHrefFromDictionary(elemDict, splitMultHref, element = 'ExplicitParContext')
                 #print href
-                Akn_LOGGER.debug('Par_mult Arthro_id reference: %s', href)
+                #Akn_LOGGER.debug('Par_mult Arthro_id reference: %s', href)
                 #text += '<ref href = ' + '"' + href + '"' + '>' + child.getText() + '</ref>'
             #elif isinstance(child, tree.Tree.TerminalNodeImpl):
                 #text += child.getText()
@@ -539,7 +539,7 @@ class AknLegalReferences(Legal_refListener, Legal_refVisitor):
                 Akn_LOGGER.debug('Par_mult par_id: %s', elemID)
                 #href = legislation_href + createHrefFromDictionary(elemDict, splitMultHref, element = 'ExplicitPeriptwsiContext')
                 #print href
-                Akn_LOGGER.debug('Par_mult par reference: %s', href)
+                #Akn_LOGGER.debug('Par_mult par reference: %s', href)
                 #text += '<ref href = ' + '"' + href + '"' + '>' + child.getText() + '</ref>'
 
         href = legislation_href + createHrefFromDictionary(elemDict, splitMultHref, element = 'ExplicitPeriptwsiContext')
