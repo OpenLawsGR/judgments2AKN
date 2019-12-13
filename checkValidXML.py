@@ -65,7 +65,7 @@ if __name__ == '__main__':
     filesCnt = 0
     for root, dirs, files in os.walk(source_path):  
         for name in files:
-            print name
+            #print name
             total_files_cnt += 1
             if fnmatch.fnmatch(name, '*' + XML_EXT):
                 total_xml_files += 1
@@ -76,10 +76,10 @@ if __name__ == '__main__':
                         name
                         )
                     ) == 1:
-                    #print name + ": Valid"
+                    print name + ": Valid"
                     total_xml_valid += 1
                 else:
-                    #print name + ": Not Valid"
+                    print name + ": Not Valid"
                     total_xml_nonValid += 1
     
     print "Total Files :" + str(total_files_cnt)
