@@ -386,6 +386,13 @@ if __name__ == '__main__':
                         workflow = akomaNtosoElem.xpath("/akomaNtoso/judgment/meta/workflow")
                         references = metaElem.xpath("/akomaNtoso/judgment/meta/references")
 
+                        # Get FRBRdate date attribute of FRBRWork and FRBRExpression elements
+                        FRBRdateWorkNode =akomaNtosoElem.xpath(
+                            "/akomaNtoso/judgment/meta/identification/FRBRWork/FRBRdate"
+                            )
+                        FRBRdateExpressionNode =akomaNtosoElem.xpath(
+                            "/akomaNtoso/judgment/meta/identification/FRBRExpression/FRBRdate"
+                            )
                         # Dates of interest can be found in specific elements in
                         # a judgment decision - find nodes
                         Akn_LOGGER.info('Searching for dates of interest...')
@@ -400,54 +407,27 @@ if __name__ == '__main__':
                                 'publicHearingDate',
                                 meta['author']
                                 )
+
                             if newHeaderNode is not None:
+                                publicHearDate = newHeaderNode[1].get('date')
+
                                 if workflow is not None:
                                     workflow[0].insert(0, newHeaderNode[1])
 
                                 if references is not None:
                                     references[0].append(newHeaderNode[2])
-                        ############################################################################
 
-                        # Get FRBRdate date attribute of FRBRWork and FRBRExpression elements
-                        FRBRdateWorkNode =akomaNtosoElem.xpath(
-                            "/akomaNtoso/judgment/meta/identification/FRBRWork/FRBRdate"
-                            )
-                        FRBRdateExpressionNode =akomaNtosoElem.xpath(
-                            "/akomaNtoso/judgment/meta/identification/FRBRExpression/FRBRdate"
-                            )
-                        ############################## decisionPublicationDate ######################
-                        # decisionPublicationDate can be found in conclusions element
-                        # of AkomaNtoso structure
-                        hasDecisionPublicationDate = True
-                        if conclusionsNode:
-                            newConclusionsNode = findDatesOfInterest(
-                                conclusionsNode[0],
-                                decisionPublicationDateObj,
-                                'decisionPublicationDate',
-                                meta['author']
-                                )
-
-                            if newConclusionsNode is not None:
-                                pubHearDate = newConclusionsNode[1].get('date')
-
-                                # Set step element to workflow node
-                                if workflow is not None:
-                                    workflow[0].insert(0, newConclusionsNode[1])
-                                
-                                # Set TLCEvent element to workflow node
-                                if references is not None:
-                                    references[0].append(newConclusionsNode[2])
-
-                                # Set "date" attribute to FRBRdate node of FRBRWork and FRBRExpression
+                                # Set "date" attribute to FRBRdate node of
+                                # FRBRWork and FRBRExpression
                                 if FRBRdateWorkNode:
-                                    FRBRdateWorkNode[0].set('date', pubHearDate)
+                                    FRBRdateWorkNode[0].set('date', publicHearDate)
+                                    FRBRdateWorkNode[0].set('name', 'publicHearingDate')
 
                                 if FRBRdateExpressionNode:
-                                    FRBRdateExpressionNode[0].set('date', pubHearDate)
-                            else:
-                                hasDecisionPublicationDate = False
-                        ##############################################################################
-                        
+                                    FRBRdateExpressionNode[0].set('date', publicHearDate)
+                                    FRBRdateExpressionNode[0].set('name', 'publicHearingDate')
+                        ############################################################################
+
                         ############################# courtConferenceDate ############################
                         # courtConferenceDate can be found in conclusions element
                         # of AkomaNtoso structure
@@ -471,14 +451,54 @@ if __name__ == '__main__':
                                     references[0].append(newConclusionsNode[2])
 
                                 # If for some reason DecisionPublicationDate does not exist
-                                # try fill FRBR date with court conference date
-                                if hasDecisionPublicationDate == False:
-                                    if FRBRdateWorkNode:
-                                        FRBRdateWorkNode[0].set('date', courtConfDate)
-                                        
-                                    if FRBRdateExpressionNode:
-                                        FRBRdateExpressionNode[0].set('date', courtConfDate)
+                                # try fill FRBR date with
+                                # court conference date
+                                #if hasDecisionPublicationDate == False:
+                                if FRBRdateWorkNode:
+                                    FRBRdateWorkNode[0].set('date', courtConfDate)
+                                    FRBRdateWorkNode[0].set('name', 'courtConferenceDate')
+                                    
+                                if FRBRdateExpressionNode:
+                                    FRBRdateExpressionNode[0].set('date', courtConfDate)
+                                    FRBRdateExpressionNode[0].set('name', 'courtConferenceDate')
                         ###############################################################################
+                        
+                        ############################## decisionPublicationDate ######################
+                        # decisionPublicationDate can be found in conclusions element
+                        # of AkomaNtoso structure
+                        #hasDecisionPublicationDate = True
+                        if conclusionsNode:
+                            newConclusionsNode = findDatesOfInterest(
+                                conclusionsNode[0],
+                                decisionPublicationDateObj,
+                                'decisionPublicationDate',
+                                meta['author']
+                                )
+
+                            if newConclusionsNode is not None:
+                                publicationDate = newConclusionsNode[1].get('date')
+
+                                # Set step element to workflow node
+                                if workflow is not None:
+                                    workflow[0].insert(0, newConclusionsNode[1])
+                                
+                                # Set TLCEvent element to workflow node
+                                if references is not None:
+                                    references[0].append(newConclusionsNode[2])
+
+                                # Set "date" attribute to FRBRdate node of
+                                # FRBRWork and FRBRExpression
+                                if FRBRdateWorkNode:
+                                    FRBRdateWorkNode[0].set('date', publicationDate)
+                                    FRBRdateWorkNode[0].set('name', 'decisionPublicationDate')
+
+                                if FRBRdateExpressionNode:
+                                    FRBRdateExpressionNode[0].set('date', publicationDate)
+                                    FRBRdateExpressionNode[0].set('name', 'decisionPublicationDate')
+                            #else:
+                            #    hasDecisionPublicationDate = False
+                        ####################################################################
+                        
                         Akn_LOGGER.info('Stop searching for dates of interest...')
 
                         # Create the corresponding ElementTree object
