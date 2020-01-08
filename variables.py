@@ -568,8 +568,9 @@ SteGarbages=[
     (r'\n([.][/][.])', '\n'),
     (r'\n[@]+\n', '\n'),    #A86_1996
     (r'\n([-]+|[** ]+)(?=\n)', '\n'),
+    (r'Αριθμός\s\d+[/]\d+\s[-]\d{1,2}[-]\s*', r''), #page numbering
     (r'\n[-]\s*\d+\s*[-]\n', ''),
-    (r'^\s\n(\S+)', r'\1'),     #empty text at the beginning of judgment
+    (r'^\s+\n(\S+)', r'\1'),     #empty text at the beginning of judgment
     (r'(\n)\s*\n+', r'\1'),  #multiple empty lines
     (r'\n\d+(\n)', r'\1'),      #page numbering as standalone number
     (r'(\d+)\|(\d+)\|(\d+)', r'\1/\2/\3'), #correction of decision using '|' character
@@ -578,6 +579,8 @@ SteGarbages=[
     (r'Αριθμός\s*\d+[/]\d+$', r''),     #judgment number at the end of the document
     (r'\s+$', ''),   # empty lines before end of document
     (r'\n\d+$', r''),      #page numbering at the end of the document
+    (r'(\n)\s+(\S+)', r'\1\2'),
+    (r'\n[_]+\n', '\n')
     ]
 
 AreiosPagosGarbages=[
