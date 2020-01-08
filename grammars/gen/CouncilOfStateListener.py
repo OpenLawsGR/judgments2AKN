@@ -49,6 +49,15 @@ class CouncilOfStateListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CouncilOfStateParser#docNumber.
+    def enterDocNumber(self, ctx):
+        pass
+
+    # Exit a parse tree produced by CouncilOfStateParser#docNumber.
+    def exitDocNumber(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by CouncilOfStateParser#docProponent.
     def enterDocProponent(self, ctx):
         pass
@@ -64,15 +73,6 @@ class CouncilOfStateListener(ParseTreeListener):
 
     # Exit a parse tree produced by CouncilOfStateParser#headerPar.
     def exitHeaderPar(self, ctx):
-        pass
-
-
-    # Enter a parse tree produced by CouncilOfStateParser#docNumber.
-    def enterDocNumber(self, ctx):
-        pass
-
-    # Exit a parse tree produced by CouncilOfStateParser#docNumber.
-    def exitDocNumber(self, ctx):
         pass
 
 
